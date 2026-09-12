@@ -1,13 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
-import { profile, claim, intro, metrics, stack, about } from "../data/site.js";
+import { profile, tagline, intro, metrics, stack, about } from "../data/site.js";
 import { games } from "../data/games.js";
 import { systems } from "../data/systems.js";
 
 const title = "Emre Çanaklı — Senior Unity Developer";
 const description =
-  "Senior Unity Developer building and operating live mobile games. Save architecture, " +
-  "LiveOps, Addressables and monetization on shipped iOS and Android titles.";
+  "Unity developer with five shipped mobile titles on iOS and Android. Gameplay systems, " +
+  "client architecture, performance optimization and live operations.";
 ---
 
 <Base title={title} description={description}>
@@ -16,12 +16,12 @@ const description =
     <div class="wrap">
       <div class="hero-meta">
         <span class="dot"></span>
-        <span class="eyebrow">{profile.role} · {profile.location}</span>
+        <span class="eyebrow">{profile.location} · Open to new roles</span>
       </div>
 
-      <h1 class="hero-claim">
-        I build the systems that keep <em class="rule-accent">live</em> mobile games running.
-      </h1>
+      <h1 class="hero-name">{profile.name}</h1>
+      <p class="hero-role">{profile.role}</p>
+      <p class="hero-tagline">{tagline}</p>
 
       <p class="lede">{intro}</p>
 
@@ -55,24 +55,17 @@ const description =
         <h2 class="section-title">Shipped titles</h2>
         <p class="eyebrow">Five titles · iOS &amp; Android · since 2021</p>
       </div>
-    </div>
 
-    <div class="wrap">
       <div class="games">
         {
           games.map((g) => (
             <article class="game reveal">
-              {g.icon ? (
-                <img class="game-icon" src={g.icon} alt={`${g.title} app icon`} width="84" height="84" loading="lazy" />
-              ) : (
-                <div class="game-icon game-icon-fallback">{g.title.charAt(0)}</div>
-              )}
+              <img class="game-icon" src={g.icon} alt={`${g.title} app icon`} width="84" height="84" loading="lazy" />
 
-              <div>
+              <div class="game-body">
                 <div class="game-head">
                   <h3 class="game-title">{g.title}</h3>
-                  {g.featured && <span class="badge badge-live">Live · weekly releases</span>}
-                  {g.delisted && <span class="badge">Delisted</span>}
+                  {g.featured && <span class="badge badge-live">Live service title</span>}
                 </div>
 
                 <p class="game-sub">
@@ -93,33 +86,28 @@ const description =
                 <div class="game-links">
                   {g.appStore && <a href={g.appStore}>App Store ↗</a>}
                   {g.playStore && <a href={g.playStore}>Google Play ↗</a>}
-                  {g.delisted && <span class="muted">No public listing — withdrawn by the publisher</span>}
-                </div>
-
-                {g.showRating && (
-                  <p class="stat-inline">
-                    <span>
-                      App Store <b>{g.rating}★</b> · {g.ratingCount.toLocaleString("en-US")} ratings
+                  {g.showRating && (
+                    <span class="stat-inline">
+                      <b>{g.rating}★</b> · {g.ratingCount.toLocaleString("en-US")} ratings
+                      {g.playInstalls ? ` · ${g.playInstalls} installs` : ""}
                     </span>
-                    {g.playInstalls && (
-                      <span>
-                        Google Play <b>{g.playRating}★</b> · {g.playInstalls} installs
-                      </span>
-                    )}
-                  </p>
-                )}
+                  )}
+                </div>
               </div>
 
               {g.screenshots?.length ? (
-                <div class="game-media">
-                  <div class="shots" data-gallery={g.title}>
-                    {g.screenshots.map((s, i) => (
-                      <button class="shot" type="button" data-src={s} aria-label={`Open ${g.title} screenshot ${i + 1}`}>
-                        <img src={s} alt={`${g.title} screenshot ${i + 1}`} loading="lazy" />
-                      </button>
-                    ))}
-                  </div>
-                  <p class="shots-hint">{g.screenshots.length} screenshots · click to enlarge</p>
+                <div class="gallery" data-gallery={g.title}>
+                  {g.screenshots.map((s, i) => (
+                    <button class="shot" type="button" data-src={s} aria-label={`View ${g.title} screenshot ${i + 1} of ${g.screenshots.length}`}>
+                      <img src={s} alt={`${g.title} screenshot ${i + 1}`} loading="lazy" />
+                      <span class="shot-zoom" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="11" cy="11" r="7" />
+                          <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" />
+                        </svg>
+                      </span>
+                    </button>
+                  ))}
                 </div>
               ) : null}
             </article>
@@ -138,9 +126,9 @@ const description =
       </div>
 
       <p class="lede" style="margin-bottom:clamp(2rem,4vw,3rem)">
-        A store page says a game shipped. It does not say what was hard about it. These are the four
-        pieces of Love Eden I designed and still maintain — the problem, the constraint that made it
-        difficult, and the decision I made.
+        A store page says a game shipped. It does not say what was hard about it. These are four
+        systems from Love Eden that I designed and maintained — the problem, the constraint that
+        made it difficult, and the decision I made.
       </p>
 
       <div class="systems">
@@ -199,8 +187,18 @@ const description =
         <h2 class="section-title">Stack</h2>
         <p class="eyebrow">Used in production, not in tutorials</p>
       </div>
-      <div class="stack-list reveal">
-        {stack.map((s) => <span class="chip">{s}</span>)}
+
+      <div class="stack">
+        {
+          stack.map((s) => (
+            <div class="stack-group reveal">
+              <h3 class="stack-title">{s.group}</h3>
+              <div class="stack-list">
+                {s.items.map((i) => <span class="chip">{i}</span>)}
+              </div>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -250,7 +248,7 @@ const description =
         render();
       };
 
-      document.querySelectorAll(".shots").forEach((strip) => {
+      document.querySelectorAll(".gallery").forEach((strip) => {
         const game = strip.dataset.gallery;
         const buttons = [...strip.querySelectorAll(".shot")];
         const shots = buttons.map((b) => ({

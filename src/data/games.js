@@ -10,7 +10,7 @@ export const games = [
   {
     ...store["love-eden"],
     studio: "United Tech (Noderno Limited)",
-    years: "2025 — present",
+    years: "2025 — 2026",
     roleTitle: "Senior Unity Developer",
     showRating: true,
     playStore: "https://play.google.com/store/apps/details?id=com.noderno.loveeden",
