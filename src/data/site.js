@@ -2,14 +2,14 @@ export const profile = {
   name: "Emre Çanaklı",
   role: "Senior Unity Developer",
   location: "İzmir, Türkiye",
-  availability: "Open to remote, hybrid and relocation across EU / UK / Türkiye",
+  // Deliberately not a job-hunting status. A portfolio outlives the search,
+  // and a stale "open to work" line is worse than none.
+  availability: "Remote, hybrid or relocation across EU / UK / Türkiye",
   email: "emrecanakli@gmail.com",
   github: "https://github.com/ecanakli",
   linkedin: "https://linkedin.com/in/ecanakli",
   cv: "/Emre_Canakli_Senior_Unity_Developer_CV.pdf",
 };
-
-export const tagline = "Five years in Unity and C#. Five shipped mobile titles.";
 
 export const intro =
   "I build mobile games in Unity. Five shipped titles on iOS and Android across two studios, " +
@@ -21,11 +21,11 @@ export const intro =
 // Only numbers a stranger can verify from a store page, or count off the shelf.
 // Lines of code and commit counts were here once; they measure typing, not engineering.
 export const metrics = [
-  { value: "5", label: "Shipped titles", note: "iOS and Android, since 2021" },
+  { value: "5", label: "Shipped titles", note: "iOS and Android" },
   { value: "4.68★", label: "App Store rating", note: "Love Eden · 4,246 ratings" },
   { value: "100K+", label: "Google Play installs", note: "Love Eden" },
   { value: "25+", label: "Live releases", note: "Rating held through every one" },
-  { value: "5 yrs", label: "Unity in production", note: "Two studios, one engine" },
+  { value: "5+ yrs", label: "Unity in production", note: "Two studios, since 2021" },
 ];
 
 export const about = [

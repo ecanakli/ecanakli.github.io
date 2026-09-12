@@ -238,12 +238,9 @@ ul {
   margin-top: 1rem;
 }
 
-.hero-tagline {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
-  color: var(--paper);
-  margin: 1.5rem 0 1.25rem;
+.hero .lede {
+  margin-top: 1.75rem;
+  font-size: clamp(1.02rem, 1.6vw, 1.18rem);
 }
 
 .hero-actions {

@@ -18,8 +18,8 @@ export const games = [
     playRating: "4.5",
     featured: true,
     summary:
-      "A live interactive-romance game with a 260K-line Unity codebase, fully Addressables-driven " +
-      "content delivered over Unity CCD, and always-on LiveOps.",
+      "A live interactive-romance game built by a seven-engineer team on a weekly release train, " +
+      "with fully Addressables-driven content delivered over Unity CCD and always-on LiveOps.",
     owned: [
       "Save and cloud-data architecture, re-built on a title that was already live",
       "LiveOps seasonal event framework behind every campaign",

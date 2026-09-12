@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { profile, tagline, intro, metrics, stack, about } from "../data/site.js";
+import { profile, intro, metrics, stack, about } from "../data/site.js";
 import { games } from "../data/games.js";
 import { systems } from "../data/systems.js";
 
@@ -16,12 +16,11 @@ const description =
     <div class="wrap">
       <div class="hero-meta">
         <span class="dot"></span>
-        <span class="eyebrow">{profile.location} · Open to new roles</span>
+        <span class="eyebrow">{profile.location}</span>
       </div>
 
       <h1 class="hero-name">{profile.name}</h1>
       <p class="hero-role">{profile.role}</p>
-      <p class="hero-tagline">{tagline}</p>
 
       <p class="lede">{intro}</p>
 
