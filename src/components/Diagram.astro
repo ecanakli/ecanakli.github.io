@@ -41,17 +41,133 @@ const { name } = Astro.props;
         <rect x="100" y="264" width="180" height="42" rx="6" class="d-box" />
         <text x="190" y="291" class="d-label" text-anchor="middle">Local file</text>
 
-        <rect x="440" y="216" width="230" height="40" rx="6" class="d-box d-guard" />
-        <text x="555" y="234" class="d-label" text-anchor="middle">Integrity guard</text>
-        <text x="555" y="249" class="d-sub" text-anchor="middle">refuses an empty overwrite</text>
+        <rect x="430" y="208" width="248" height="36" rx="6" class="d-box d-guard" />
+        <text x="554" y="223" class="d-label" text-anchor="middle">Integrity guard</text>
+        <text x="554" y="237" class="d-sub" text-anchor="middle">refuses an empty overwrite</text>
 
-        <path d="M555 256 V264" class="d-arrow" />
-        <rect x="465" y="264" width="180" height="42" rx="6" class="d-box" />
-        <text x="555" y="291" class="d-label" text-anchor="middle">PlayFab cloud save</text>
+        <path d="M554 244 V252" class="d-arrow" />
+
+        <rect x="430" y="254" width="248" height="36" rx="6" class="d-box d-guard" />
+        <text x="554" y="269" class="d-label" text-anchor="middle">Version envelope</text>
+        <text x="554" y="283" class="d-sub" text-anchor="middle">counter + writer identity, newer wins</text>
+
+        <path d="M678 272 H700 V162 H600" class="d-arrow" />
+        <rect x="420" y="140" width="180" height="40" rx="6" class="d-box d-fill" />
+        <text x="510" y="157" class="d-label" text-anchor="middle">PlayFab batch write</text>
+        <text x="510" y="172" class="d-sub d-mono" text-anchor="middle">9 keys + 1 envelope = 10 max</text>
 
         <text x="690" y="88" class="d-sub" text-anchor="middle">0.5s</text>
         <text x="690" y="103" class="d-sub" text-anchor="middle">debounce</text>
         <path d="M400 87 H660" class="d-arrow d-dash" />
+      </svg>
+    </figure>
+  )
+}
+
+{
+  name === "login" && (
+    <figure class="diagram">
+      <svg viewBox="0 0 760 300" role="img" aria-labelledby="d-login-t">
+        <title id="d-login-t">
+          The old flow copied the other account's data into the current one; the new flow records the
+          switch on disk, resets local state and signs into the target through the backend's own door.
+        </title>
+
+        <text x="16" y="30" class="d-sub d-mono">BEFORE</text>
+        <rect x="16" y="40" width="150" height="44" rx="6" class="d-box" />
+        <text x="91" y="59" class="d-label" text-anchor="middle">Sign in, email B</text>
+        <text x="91" y="75" class="d-sub" text-anchor="middle">on account A</text>
+
+        <path d="M166 62 H214" class="d-arrow" />
+        <rect x="216" y="40" width="186" height="44" rx="6" class="d-box" />
+        <text x="309" y="59" class="d-label" text-anchor="middle">Log into B directly</text>
+        <text x="309" y="75" class="d-sub" text-anchor="middle">backend never told</text>
+
+        <path d="M402 62 H450" class="d-arrow" />
+        <rect x="452" y="32" width="292" height="60" rx="6" class="d-box d-bad" />
+        <text x="598" y="52" class="d-label" text-anchor="middle">Session = B, backend = A</text>
+        <text x="598" y="70" class="d-sub" text-anchor="middle">store empty, gems unbuyable</text>
+        <text x="598" y="85" class="d-sub" text-anchor="middle">so instead: copy B's data over A</text>
+
+        <line x1="16" y1="112" x2="744" y2="112" class="d-rule" />
+
+        <text x="16" y="142" class="d-sub d-mono">AFTER</text>
+        <rect x="16" y="152" width="150" height="52" rx="6" class="d-box" />
+        <text x="91" y="174" class="d-label" text-anchor="middle">Comparison screen</text>
+        <text x="91" y="191" class="d-sub" text-anchor="middle">both accounts, real avatars</text>
+
+        <path d="M166 178 H210" class="d-arrow" />
+        <rect x="212" y="152" width="164" height="52" rx="6" class="d-box d-accent" />
+        <text x="294" y="174" class="d-label" text-anchor="middle">Mark switch on disk</text>
+        <text x="294" y="191" class="d-sub" text-anchor="middle">before anything else</text>
+
+        <path d="M376 178 H420" class="d-arrow" />
+        <rect x="422" y="152" width="150" height="52" rx="6" class="d-box" />
+        <text x="497" y="174" class="d-label" text-anchor="middle">Reset local state</text>
+        <text x="497" y="191" class="d-sub" text-anchor="middle">nothing copied</text>
+
+        <path d="M572 178 H616" class="d-arrow" />
+        <rect x="618" y="152" width="126" height="52" rx="6" class="d-box d-fill" />
+        <text x="681" y="174" class="d-label" text-anchor="middle">Backend's own</text>
+        <text x="681" y="191" class="d-label" text-anchor="middle">login door</text>
+
+        <path d="M681 204 V232 H91 V254" class="d-arrow" />
+        <rect x="16" y="256" width="240" height="34" rx="6" class="d-box d-fill" />
+        <text x="136" y="278" class="d-label" text-anchor="middle">In-place restart, behind the loader</text>
+
+        <text x="470" y="228" class="d-sub" text-anchor="middle">
+          if the restart ever fails, the disk record makes the next launch finish the job
+        </text>
+      </svg>
+    </figure>
+  )
+}
+
+{
+  name === "popup" && (
+    <figure class="diagram">
+      <svg viewBox="0 0 760 300" role="img" aria-labelledby="d-popup-t">
+        <title id="d-popup-t">
+          A session-start strategy is chosen from player age and session count, then each candidate
+          passes a filter chain before it is ever constructed.
+        </title>
+
+        <rect x="16" y="24" width="186" height="62" rx="8" class="d-box" />
+        <text x="109" y="48" class="d-label" text-anchor="middle">Session start</text>
+        <text x="109" y="67" class="d-sub" text-anchor="middle">days installed · session count</text>
+
+        <path d="M202 55 H250" class="d-arrow" />
+
+        <rect x="252" y="16" width="246" height="78" rx="8" class="d-box d-accent" />
+        <text x="375" y="40" class="d-label" text-anchor="middle">Strategy selection</text>
+        <text x="375" y="59" class="d-sub" text-anchor="middle">day 0 first session → login bonus only</text>
+        <text x="375" y="76" class="d-sub" text-anchor="middle">day 1+ → pass, bonus, sub, one offer</text>
+
+        <path d="M498 55 H548" class="d-arrow" />
+        <rect x="550" y="24" width="194" height="62" rx="8" class="d-box d-guard" />
+        <text x="647" y="48" class="d-label" text-anchor="middle">Three hard guards</text>
+        <text x="647" y="67" class="d-sub" text-anchor="middle">shown · auto-swipe · no matches</text>
+
+        <path d="M375 94 V126" class="d-arrow" />
+
+        <rect x="196" y="128" width="358" height="58" rx="8" class="d-box d-fill" />
+        <text x="375" y="152" class="d-label" text-anchor="middle">Filter chain, before construction</text>
+        <text x="375" y="171" class="d-sub" text-anchor="middle">A/B variant filter · flagged-account filter</text>
+
+        <path d="M280 186 V216" class="d-arrow" />
+        <path d="M470 186 V216" class="d-arrow d-dash" />
+
+        <rect x="176" y="218" width="208" height="46" rx="6" class="d-box" />
+        <text x="280" y="238" class="d-label" text-anchor="middle">Built and shown</text>
+        <text x="280" y="255" class="d-sub" text-anchor="middle">data passed at creation</text>
+
+        <rect x="398" y="218" width="208" height="46" rx="6" class="d-box" />
+        <text x="502" y="238" class="d-label" text-anchor="middle">Suppressed</text>
+        <text x="502" y="255" class="d-sub" text-anchor="middle">never constructed, costs nothing</text>
+
+        <text x="375" y="288" class="d-sub" text-anchor="middle">
+          same pattern drives shop banners and sidebar icons; ordering is inspector data
+        </text>
       </svg>
     </figure>
   )

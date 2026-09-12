@@ -58,6 +58,24 @@ const title = `${system.title} | Emre Çanaklı`;
 
             {sec.diagram && <Diagram name={sec.diagram} />}
 
+            {sec.table && (
+              <div class="study-table-wrap">
+                <table class="study-table">
+                  <thead>
+                    <tr>{sec.table.head.map((h) => <th>{h}</th>)}</tr>
+                  </thead>
+                  <tbody>
+                    {sec.table.rows.map((row) => (
+                      <tr>{row.map((cell) => <td>{cell}</td>)}</tr>
+                    ))}
+                  </tbody>
+                </table>
+                {sec.table.note && <p class="study-table-note">{sec.table.note}</p>}
+              </div>
+            )}
+
+            {sec.body2?.map((p) => <p>{p}</p>)}
+
             {sec.decisions && (
               <div class="decisions">
                 {sec.decisions.map((d) => (

@@ -1174,3 +1174,84 @@ html {
 .system:hover .system-title {
   color: var(--accent);
 }
+
+/* Case-study tables */
+
+.study-table-wrap {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.study-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.study-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-faint);
+  font-weight: 400;
+  padding: 0.75rem 1rem;
+  background: var(--ink-sunken);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.study-table td {
+  padding: 0.7rem 1rem;
+  color: var(--paper-dim);
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.study-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.study-table tbody tr:last-child {
+  background: rgba(217, 164, 65, 0.06);
+}
+
+.study-table tbody tr:last-child td:first-child {
+  color: var(--accent);
+}
+
+.study-table td + td {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.study-table td:first-child {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--paper);
+}
+
+.study-table-note {
+  margin: 0 !important;
+  padding: 0.8rem 1rem;
+  background: var(--ink-sunken);
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem !important;
+  color: var(--paper-faint) !important;
+}
+
+/* Diagram extras */
+
+.d-bad {
+  fill: rgba(184, 84, 80, 0.12);
+  stroke: #b85450;
+}
+
+.d-rule {
+  stroke: var(--line);
+  stroke-width: 1;
+}
