@@ -1,0 +1,121 @@
+{
+  "love-eden": {
+    "slug": "love-eden",
+    "title": "Love Eden: Chapters of Romance",
+    "publisher": "NODERNO LIMITED",
+    "genres": [
+      "Casual",
+      "Simulation"
+    ],
+    "rating": 4.68,
+    "ratingCount": 4246,
+    "released": "2024-03-29",
+    "updated": "2026-09-08",
+    "version": "2.5.1",
+    "appStore": "https://apps.apple.com/us/app/love-eden-chapters-of-romance/id6471411677",
+    "icon": "/media/love-eden/icon.webp",
+    "screenshots": [
+      "/media/love-eden/shot1.webp",
+      "/media/love-eden/shot2.webp",
+      "/media/love-eden/shot3.webp",
+      "/media/love-eden/shot4.webp",
+      "/media/love-eden/shot5.webp",
+      "/media/love-eden/shot6.webp",
+      "/media/love-eden/shot7.webp",
+      "/media/love-eden/shot8.webp"
+    ]
+  },
+  "space-colony": {
+    "slug": "space-colony",
+    "title": "Space Colony: Idle Tap Miner",
+    "publisher": "VELOXIA YAZILIM VE TEKNOLOJI ANONIM SIRKETI",
+    "genres": [
+      "Strategy",
+      "Simulation"
+    ],
+    "rating": 4.42,
+    "ratingCount": 1568,
+    "released": "2019-10-09",
+    "updated": "2022-04-28",
+    "version": "4.0.3",
+    "appStore": "https://apps.apple.com/us/app/space-colony-idle-tap-miner/id1476713225",
+    "icon": "/media/space-colony/icon.webp",
+    "screenshots": [
+      "/media/space-colony/shot1.webp",
+      "/media/space-colony/shot2.webp",
+      "/media/space-colony/shot3.webp",
+      "/media/space-colony/shot4.webp",
+      "/media/space-colony/shot5.webp",
+      "/media/space-colony/shot6.webp",
+      "/media/space-colony/shot7.webp"
+    ]
+  },
+  "shipping-life": {
+    "slug": "shipping-life",
+    "title": "Shipping Life: Idle Empire",
+    "publisher": "VELOXIA YAZILIM VE TEKNOLOJI ANONIM SIRKETI",
+    "genres": [
+      "Strategy",
+      "Simulation"
+    ],
+    "rating": 1,
+    "ratingCount": 6,
+    "released": "2022-11-23",
+    "updated": "2023-03-02",
+    "version": "0.9.16",
+    "appStore": "https://apps.apple.com/us/app/shipping-life-idle-empire/id1592959235",
+    "icon": "/media/shipping-life/icon.webp",
+    "screenshots": [
+      "/media/shipping-life/shot1.webp",
+      "/media/shipping-life/shot2.webp",
+      "/media/shipping-life/shot3.webp",
+      "/media/shipping-life/shot4.webp",
+      "/media/shipping-life/shot5.webp",
+      "/media/shipping-life/shot6.webp"
+    ]
+  },
+  "match-monsters": {
+    "slug": "match-monsters",
+    "title": "Match Monsters!",
+    "publisher": "VELOXIA YAZILIM VE TEKNOLOJI ANONIM SIRKETI",
+    "genres": [
+      "Casual",
+      "Puzzle"
+    ],
+    "rating": 3.67,
+    "ratingCount": 3,
+    "released": "2024-08-23",
+    "updated": "2024-09-20",
+    "version": "1.0.8",
+    "appStore": "https://apps.apple.com/tr/app/match-monsters/id6499011478",
+    "icon": "/media/match-monsters/icon.webp",
+    "screenshots": [
+      "/media/match-monsters/shot1.webp",
+      "/media/match-monsters/shot2.webp",
+      "/media/match-monsters/shot3.webp",
+      "/media/match-monsters/shot4.webp"
+    ]
+  },
+  "money-dash": {
+    "slug": "money-dash",
+    "title": "Money Dash: Idle Banking Game",
+    "publisher": "VELOXIA YAZILIM VE TEKNOLOJI ANONIM SIRKETI",
+    "genres": [
+      "Strategy",
+      "Simulation"
+    ],
+    "rating": 0,
+    "ratingCount": 0,
+    "released": "2024-03-29",
+    "updated": "2024-03-29",
+    "version": "1.0",
+    "appStore": "https://apps.apple.com/us/app/money-dash-idle-banking-game/id6467115607",
+    "icon": "/media/money-dash/icon.webp",
+    "screenshots": [
+      "/media/money-dash/shot1.webp",
+      "/media/money-dash/shot2.webp",
+      "/media/money-dash/shot3.webp",
+      "/media/money-dash/shot4.webp"
+    ]
+  }
+}

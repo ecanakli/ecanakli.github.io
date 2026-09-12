@@ -1,0 +1,190 @@
+---
+import Base from "../layouts/Base.astro";
+import { profile, claim, intro, metrics, stack } from "../data/site.js";
+import { games } from "../data/games.js";
+import { systems } from "../data/systems.js";
+
+const title = "Emre Çanaklı — Senior Unity Developer";
+const description =
+  "Senior Unity Developer building and operating live mobile games. Save architecture, " +
+  "LiveOps, Addressables and monetization on shipped iOS and Android titles.";
+---
+
+<Base title={title} description={description}>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-meta">
+        <span class="dot"></span>
+        <span class="eyebrow">{profile.role} · {profile.location}</span>
+      </div>
+
+      <h1 class="hero-claim">
+        I build the systems that keep <em class="rule-accent">live</em> mobile games running.
+      </h1>
+
+      <p class="lede">{intro}</p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#work">See the work</a>
+        <a class="btn" href={profile.cv}>Download CV</a>
+        <a class="btn" href={`mailto:${profile.email}`}>Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Metrics -->
+  <section class="wrap" style="padding-bottom:clamp(3rem,7vw,5rem)">
+    <div class="metrics reveal">
+      {
+        metrics.map((m) => (
+          <div class="metric">
+            <div class="metric-value">{m.value}</div>
+            <div class="metric-label">{m.label}</div>
+            <div class="metric-note">{m.note}</div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Shipped work -->
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Shipped titles</h2>
+        <p class="eyebrow">Six titles · iOS &amp; Android · since 2021</p>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="games">
+        {
+          games.map((g) => (
+            <article class="game reveal">
+              {g.icon ? (
+                <img class="game-icon" src={g.icon} alt={`${g.title} app icon`} width="84" height="84" loading="lazy" />
+              ) : (
+                <div class="game-icon game-icon-fallback">{g.title.charAt(0)}</div>
+              )}
+
+              <div>
+                <div class="game-head">
+                  <h3 class="game-title">{g.title}</h3>
+                  {g.featured && <span class="badge badge-live">Live · weekly releases</span>}
+                  {g.delisted && <span class="badge">Delisted</span>}
+                </div>
+
+                <p class="game-sub">
+                  {g.roleTitle} · {g.studio} · {g.years}
+                  {g.genres?.length ? ` · ${g.genres.join(", ")}` : ""}
+                </p>
+
+                <p class="game-summary">{g.summary}</p>
+
+                <ul class="owned">
+                  {g.owned.map((item) => <li>{item}</li>)}
+                </ul>
+
+                <div class="chips">
+                  {g.tech.map((t) => <span class="chip">{t}</span>)}
+                </div>
+
+                <div class="game-links">
+                  {g.appStore && <a href={g.appStore}>App Store ↗</a>}
+                  {g.playStore && <a href={g.playStore}>Google Play ↗</a>}
+                  {g.delisted && <span class="muted">No public listing — withdrawn by the publisher</span>}
+                </div>
+
+                {g.showRating && (
+                  <p class="stat-inline">
+                    <span>
+                      App Store <b>{g.rating}★</b> · {g.ratingCount.toLocaleString("en-US")} ratings
+                    </span>
+                    {g.playInstalls && (
+                      <span>
+                        Google Play <b>{g.playRating}★</b> · {g.playInstalls} installs
+                      </span>
+                    )}
+                  </p>
+                )}
+              </div>
+
+              {g.screenshots?.length ? (
+                <div class="game-media">
+                  <div class="shots">
+                    {g.screenshots.slice(0, 4).map((s, i) => (
+                      <img src={s} alt={`${g.title} screenshot ${i + 1}`} loading="lazy" />
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Systems -->
+  <section class="section" id="systems">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Systems I owned</h2>
+        <p class="eyebrow">Case studies · in progress</p>
+      </div>
+
+      <p class="lede" style="margin-bottom:clamp(2rem,4vw,3rem)">
+        A store page says a game shipped. It does not say what was hard about it. These are the four
+        pieces of Love Eden I designed and still maintain — the problem, the constraint that made it
+        difficult, and the decision I made.
+      </p>
+
+      <div class="systems">
+        {
+          systems.map((s) => (
+            <article class="system reveal">
+              <div class="system-number">{s.number}</div>
+              <div>
+                <h3 class="system-title">{s.title}</h3>
+                <p class="system-hook">{s.hook}</p>
+
+                <dl class="system-facts">
+                  <div>
+                    <dt>Context</dt>
+                    <dd>{s.context}</dd>
+                  </div>
+                  <div>
+                    <dt>Constraint</dt>
+                    <dd>{s.constraint}</dd>
+                  </div>
+                  <div>
+                    <dt>Outcome</dt>
+                    <dd>{s.outcome}</dd>
+                  </div>
+                </dl>
+
+                <div class="chips">
+                  {s.tags.map((t) => <span class="chip">{t}</span>)}
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section class="section" id="stack">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Stack</h2>
+        <p class="eyebrow">Used in production, not in tutorials</p>
+      </div>
+      <div class="stack-list reveal">
+        {stack.map((s) => <span class="chip">{s}</span>)}
+      </div>
+    </div>
+  </section>
+</Base>

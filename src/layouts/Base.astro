@@ -1,0 +1,100 @@
+---
+import "../styles/global.css";
+import { profile } from "../data/site.js";
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL("/og.png", Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: profile.name,
+        jobTitle: profile.role,
+        email: profile.email,
+        url: Astro.site,
+        sameAs: [profile.github, profile.linkedin],
+      })}
+    />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">EMRE ÇANAKLI <span>/ Unity</span></a>
+        <nav class="site-nav">
+          <a href="/#work">Work</a>
+          <a href="/#systems">Systems</a>
+          <a class="nav-hide-sm" href={profile.github}>GitHub</a>
+          <a class="nav-cv" href={profile.cv}>CV</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div>
+            <p class="eyebrow" style="margin-bottom:0.6rem">Open to Senior Unity roles</p>
+            <a class="footer-mail" href={`mailto:${profile.email}`}>{profile.email}</a>
+            <p class="lede" style="font-size:0.88rem;margin-top:0.6rem">{profile.availability}</p>
+          </div>
+          <div class="footer-links">
+            <a href={profile.linkedin}>LinkedIn</a>
+            <a href={profile.github}>GitHub</a>
+            <a href={profile.cv}>CV (PDF)</a>
+          </div>
+        </div>
+        <div class="colophon">
+          <span>© {new Date().getFullYear()} {profile.name}</span>
+          <span>Store artwork belongs to its respective publishers</span>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: "0px 0px -8% 0px" }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
