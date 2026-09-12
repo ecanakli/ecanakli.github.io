@@ -4,7 +4,7 @@ import { profile, tagline, intro, metrics, stack, about } from "../data/site.js"
 import { games } from "../data/games.js";
 import { systems } from "../data/systems.js";
 
-const title = "Emre Çanaklı — Senior Unity Developer";
+const title = "Emre Çanaklı | Senior Unity Developer";
 const description =
   "Unity developer with five shipped mobile titles on iOS and Android. Gameplay systems, " +
   "client architecture, performance optimization and live operations.";
@@ -127,8 +127,8 @@ const description =
 
       <p class="lede" style="margin-bottom:clamp(2rem,4vw,3rem)">
         A store page says a game shipped. It does not say what was hard about it. These are four
-        systems from Love Eden that I designed and maintained — the problem, the constraint that
-        made it difficult, and the decision I made.
+        systems from Love Eden that I designed and maintained. Each one covers the problem, the
+        constraint that made it difficult, and the decision I made.
       </p>
 
       <div class="systems">
@@ -224,7 +224,7 @@ const description =
       const render = () => {
         img.src = group[index].src;
         img.alt = group[index].alt;
-        cap.textContent = `${group[index].game} — ${index + 1} / ${group.length}`;
+        cap.textContent = `${group[index].game} · ${index + 1} / ${group.length}`;
       };
 
       const open = (shots, i, trigger) => {

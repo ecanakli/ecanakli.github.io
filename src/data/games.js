@@ -4,13 +4,13 @@ import store from "./store-data.json";
 // Everything below is the part a store page cannot tell you: what I owned.
 //
 // showRating is deliberate. A rating only appears when the sample is large
-// enough to mean something — a title with six ratings is noise, not evidence.
+// enough to mean something. A title with six ratings is noise, not evidence.
 
 export const games = [
   {
     ...store["love-eden"],
     studio: "United Tech (Noderno Limited)",
-    years: "2025 — 2026",
+    years: "2025–2026",
     roleTitle: "Senior Unity Developer",
     showRating: true,
     playStore: "https://play.google.com/store/apps/details?id=com.noderno.loveeden",
@@ -21,7 +21,7 @@ export const games = [
       "A live interactive-romance game with a 260K-line Unity codebase, fully Addressables-driven " +
       "content delivered over Unity CCD, and always-on LiveOps.",
     owned: [
-      "Save and cloud-data architecture — re-built on a title that was already live",
+      "Save and cloud-data architecture, re-built on a title that was already live",
       "LiveOps seasonal event framework behind every campaign",
       "Subscriptions, battle pass, store and purchase flows",
       "Sign in with Apple, Google Sign-In, provider linking and account recovery",
@@ -34,7 +34,7 @@ export const games = [
   {
     ...store["space-colony"],
     studio: "Veloxia Technology",
-    years: "2021 — 2024",
+    years: "2021–2024",
     roleTitle: "Game Developer",
     showRating: true,
     summary:
@@ -44,7 +44,7 @@ export const games = [
       "Cloud save and cross-device progression",
       "Leaderboards and competitive progression surfaces",
       "LiveOps store content and remotely configured offers",
-      "Recurring seasonal events — Halloween, Christmas, Wheel of Fortune — as one repeatable pattern",
+      "Recurring seasonal events (Halloween, Christmas, Wheel of Fortune) as one repeatable pattern",
       "Monetization stack: Unity IAP, RevenueCat subscriptions, ad mediation across five networks",
       "Content delivery migrated onto Unity Addressables for load time and memory",
     ],
@@ -53,15 +53,15 @@ export const games = [
   {
     ...store["shipping-life"],
     studio: "Veloxia Technology",
-    years: "2021 — 2024",
+    years: "2021–2024",
     roleTitle: "Game Developer",
     showRating: false,
     summary:
       "An idle shipping-empire tycoon, and the project where the architecture mattered more than " +
-      "the scope — built end to end on dependency injection with an entirely event-driven runtime.",
+      "the scope. Built end to end on dependency injection with an entirely event-driven runtime.",
     owned: [
       "Full dependency-injection architecture across the whole title, on Zenject",
-      "Event-driven runtime — systems communicate through events, not references",
+      "Event-driven runtime: systems communicate through events, not references",
       "Strategy pattern for interchangeable gameplay and economy behaviour",
       "Character animation driven by the objects the crew interacts with",
       "Seasonal event systems reused across the studio's catalogue",
@@ -72,7 +72,7 @@ export const games = [
   {
     ...store["match-monsters"],
     studio: "Veloxia Technology",
-    years: "2021 — 2024",
+    years: "2021–2024",
     roleTitle: "Game Developer",
     showRating: false,
     summary:
@@ -87,11 +87,11 @@ export const games = [
   {
     ...store["money-dash"],
     studio: "Veloxia Technology",
-    years: "2021 — 2024",
+    years: "2021–2024",
     roleTitle: "Game Developer",
     showRating: false,
     summary:
-      "An idle banking tycoon — grow a single branch into a network that earns around the clock.",
+      "An idle banking tycoon. Grow a single branch into a network that earns around the clock.",
     owned: [
       "Gameplay features, progression systems and UI/UX flows",
       "Monetization and analytics stack: Unity IAP, ad mediation, Firebase",

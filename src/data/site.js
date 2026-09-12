@@ -13,10 +13,10 @@ export const tagline = "Five years in Unity and C#. Five shipped mobile titles."
 
 export const intro =
   "I build mobile games in Unity. Five shipped titles on iOS and Android across two studios, " +
-  "working from prototype to launch and staying on them afterwards — gameplay systems, client " +
-  "architecture, UI, content pipelines and performance. Most of my time goes to the parts that " +
-  "decide whether a game survives its first year: how it is structured, how fast it runs on a " +
-  "cheap Android phone, and how it keeps shipping content after release.";
+  "working from prototype to launch and staying on them afterwards. That work covers gameplay " +
+  "systems, client architecture, UI, content pipelines and performance. Most of my time goes to " +
+  "the parts that decide whether a game survives its first year: how it is structured, how fast " +
+  "it runs on a cheap Android phone, and how it keeps shipping content after release.";
 
 // Only numbers a stranger can verify from a store page, or count off the shelf.
 // Lines of code and commit counts were here once; they measure typing, not engineering.
@@ -38,7 +38,7 @@ export const about = [
 export const stack = [
   {
     group: "Engine & Language",
-    items: ["C#", "Unity 2022 LTS", "Unity 6", "URP", "Shader Graph", "DOTween", "Cinemachine", "Unity Localization"],
+    items: ["C#", "Unity 2022 LTS", "Unity 6", "URP", "Shader Graph", "DOTween", "Unity Localization"],
   },
   {
     group: "Performance & Optimization",
@@ -79,7 +79,7 @@ export const stack = [
   },
   {
     group: "Multiplayer",
-    items: ["Netcode for GameObjects", "Mirror", "Client–server synchronization"],
+    items: ["Netcode for GameObjects", "Mirror", "Client-server synchronization"],
   },
   {
     group: "Pipeline & Tooling",
