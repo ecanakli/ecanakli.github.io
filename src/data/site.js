@@ -12,20 +12,20 @@ export const profile = {
 };
 
 export const intro =
-  "I build mobile games in Unity. Five shipped titles on iOS and Android across two studios, " +
-  "working from prototype to launch and staying on them afterwards. That work covers gameplay " +
-  "systems, client architecture, UI, content pipelines and performance. Most of my time goes to " +
-  "the parts that decide whether a game survives its first year: how it is structured, how fast " +
-  "it runs on a cheap Android phone, and how it keeps shipping content after release.";
+  "I have been developing mobile games professionally for five years, working in teams on titles " +
+  "shipped for iOS and Android. I work on the game itself, on mechanics, progression, UI and " +
+  "content pipelines, and on the systems underneath it: save and cloud data, sign-in and account " +
+  "recovery, remote content delivery, seasonal events and monetization. Most of my time goes to " +
+  "what decides whether a title survives its first year, which is how it is structured, how fast " +
+  "it runs on a cheap Android phone, and whether it can keep shipping content after release.";
 
 // Only numbers a stranger can verify from a store page, or count off the shelf.
 // Lines of code and commit counts were here once; they measure typing, not engineering.
 export const metrics = [
+  { value: "5+ yrs", label: "Professional experience", note: "Mobile games, since 2021" },
   { value: "5", label: "Shipped titles", note: "iOS and Android" },
   { value: "4.68★", label: "App Store rating", note: "Love Eden · 4,246 ratings" },
   { value: "100K+", label: "Google Play installs", note: "Love Eden" },
-  { value: "25+", label: "Live releases", note: "Rating held through every one" },
-  { value: "5+ yrs", label: "Unity in production", note: "Two studios, since 2021" },
 ];
 
 export const about = [
