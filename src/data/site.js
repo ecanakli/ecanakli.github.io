@@ -13,19 +13,26 @@ export const claim =
   "I build the systems that keep live mobile games running.";
 
 export const intro =
-  "Five years on Unity titles across iOS and Android, most of it spent on the unglamorous half " +
-  "of game development: save architecture that survives a reinstall, content delivery that updates " +
-  "without a store release, and monetization flows that survive contact with real payment edge cases. " +
-  "Currently senior client engineer on Love Eden — a live narrative game on a weekly release train.";
+  "Five years in, almost entirely C# and Unity. My depth is in live-game architecture — save and " +
+  "cloud data, content delivery, monetization, LiveOps. Around that I've kept enough breadth to " +
+  "follow a problem wherever it leads: backend, analytics, release pipelines. Problems rarely stay " +
+  "in one place.";
 
-// Every number here is publicly verifiable or drawn from the shipped codebase.
+// Only numbers a stranger can verify from a store page, or count from the shelf.
+// Lines of code and commit counts were here once; they measure typing, not engineering.
 export const metrics = [
-  { value: "4.68★", label: "App Store rating", note: "Love Eden, 4,246 ratings" },
+  { value: "4.68★", label: "App Store rating", note: "Love Eden · 4,246 ratings" },
   { value: "100K+", label: "Google Play installs", note: "Love Eden" },
-  { value: "260K", label: "Lines of C# owned", note: "4,300 files, 7-engineer team" },
-  { value: "1,700+", label: "Commits in 18 months", note: "Weekly release train" },
-  { value: "6", label: "Shipped titles", note: "iOS and Android, since 2021" },
-  { value: "25+", label: "Live releases", note: "Sustained 4.7★ throughout" },
+  { value: "6", label: "Shipped titles", note: "Five shown · one withdrawn from stores" },
+  { value: "25+", label: "Live releases", note: "Rating held through every one" },
+  { value: "5 yrs", label: "Unity in production", note: "Two studios, one engine" },
+];
+
+export const about = [
+  "I'm a perfectionist, and it shows mostly in places nobody looks: the structure underneath a " +
+    "feature, the edge case that hasn't happened yet, the code someone will have to read a year " +
+    "from now. I'd rather build something once, properly, than three times quickly.",
+  "I also use AI tooling heavily day to day, and I've shipped LLM features into production games.",
 ];
 
 export const stack = [

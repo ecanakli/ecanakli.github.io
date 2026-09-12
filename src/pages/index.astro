@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { profile, claim, intro, metrics, stack } from "../data/site.js";
+import { profile, claim, intro, metrics, stack, about } from "../data/site.js";
 import { games } from "../data/games.js";
 import { systems } from "../data/systems.js";
 
@@ -53,7 +53,7 @@ const description =
     <div class="wrap">
       <div class="section-head">
         <h2 class="section-title">Shipped titles</h2>
-        <p class="eyebrow">Six titles · iOS &amp; Android · since 2021</p>
+        <p class="eyebrow">Five titles · iOS &amp; Android · since 2021</p>
       </div>
     </div>
 
@@ -112,11 +112,14 @@ const description =
 
               {g.screenshots?.length ? (
                 <div class="game-media">
-                  <div class="shots">
-                    {g.screenshots.slice(0, 4).map((s, i) => (
-                      <img src={s} alt={`${g.title} screenshot ${i + 1}`} loading="lazy" />
+                  <div class="shots" data-gallery={g.title}>
+                    {g.screenshots.map((s, i) => (
+                      <button class="shot" type="button" data-src={s} aria-label={`Open ${g.title} screenshot ${i + 1}`}>
+                        <img src={s} alt={`${g.title} screenshot ${i + 1}`} loading="lazy" />
+                      </button>
                     ))}
                   </div>
+                  <p class="shots-hint">{g.screenshots.length} screenshots · click to enlarge</p>
                 </div>
               ) : null}
             </article>
@@ -175,6 +178,20 @@ const description =
     </div>
   </section>
 
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="about reveal">
+        <div class="section-head" style="margin-bottom:0">
+          <h2 class="section-title">How I work</h2>
+        </div>
+        <div class="about-body">
+          {about.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Stack -->
   <section class="section" id="stack">
     <div class="wrap">
@@ -187,4 +204,75 @@ const description =
       </div>
     </div>
   </section>
+
+  <!-- Screenshot lightbox -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" type="button" aria-label="Close">✕</button>
+    <button class="lb-nav lb-prev" type="button" aria-label="Previous">‹</button>
+    <img id="lb-img" src="" alt="" />
+    <button class="lb-nav lb-next" type="button" aria-label="Next">›</button>
+    <p class="lb-caption" id="lb-caption"></p>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const box = document.getElementById("lightbox");
+      const img = document.getElementById("lb-img");
+      const cap = document.getElementById("lb-caption");
+      let group = [];
+      let index = 0;
+      let opener = null;
+
+      const render = () => {
+        img.src = group[index].src;
+        img.alt = group[index].alt;
+        cap.textContent = `${group[index].game} — ${index + 1} / ${group.length}`;
+      };
+
+      const open = (shots, i, trigger) => {
+        group = shots;
+        index = i;
+        opener = trigger;
+        render();
+        box.hidden = false;
+        document.body.style.overflow = "hidden";
+        box.querySelector(".lb-close").focus();
+      };
+
+      const close = () => {
+        box.hidden = true;
+        document.body.style.overflow = "";
+        if (opener) opener.focus();
+      };
+
+      const step = (d) => {
+        index = (index + d + group.length) % group.length;
+        render();
+      };
+
+      document.querySelectorAll(".shots").forEach((strip) => {
+        const game = strip.dataset.gallery;
+        const buttons = [...strip.querySelectorAll(".shot")];
+        const shots = buttons.map((b) => ({
+          src: b.dataset.src,
+          alt: b.querySelector("img").alt,
+          game,
+        }));
+        buttons.forEach((b, i) => b.addEventListener("click", () => open(shots, i, b)));
+      });
+
+      box.querySelector(".lb-close").addEventListener("click", close);
+      box.querySelector(".lb-prev").addEventListener("click", () => step(-1));
+      box.querySelector(".lb-next").addEventListener("click", () => step(1));
+      box.addEventListener("click", (e) => {
+        if (e.target === box) close();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (box.hidden) return;
+        if (e.key === "Escape") close();
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+      });
+    })();
+  </script>
 </Base>

@@ -39,14 +39,16 @@ export const games = [
     showRating: true,
     summary:
       "An idle tap-miner that stayed live from 2019 to 2022 across sixteen planets, carrying a " +
-      "full backend surface for an idle title of its size.",
+      "backend surface most idle titles of its size never build.",
     owned: [
       "Cloud save and cross-device progression",
       "Leaderboards and competitive progression surfaces",
       "LiveOps store content and remotely configured offers",
-      "Monetization and analytics instrumentation end to end",
+      "Recurring seasonal events — Halloween, Christmas, Wheel of Fortune — as one repeatable pattern",
+      "Monetization stack: Unity IAP, RevenueCat subscriptions, ad mediation across five networks",
+      "Content delivery migrated onto Unity Addressables for load time and memory",
     ],
-    tech: ["Unity", "C#", "Cloud Save", "Leaderboards", "LiveOps", "Firebase", "Unity IAP", "Ad Mediation"],
+    tech: ["Unity", "C#", "Cloud Save", "Leaderboards", "LiveOps", "Addressables", "Unity IAP", "RevenueCat", "Firebase", "OneSignal"],
   },
   {
     ...store["shipping-life"],
@@ -58,13 +60,14 @@ export const games = [
       "An idle shipping-empire tycoon, and the project where the architecture mattered more than " +
       "the scope — built end to end on dependency injection with an entirely event-driven runtime.",
     owned: [
-      "Full dependency-injection architecture across the whole title",
+      "Full dependency-injection architecture across the whole title, on Zenject",
       "Event-driven runtime — systems communicate through events, not references",
       "Strategy pattern for interchangeable gameplay and economy behaviour",
       "Character animation driven by the objects the crew interacts with",
-      "Monetization and analytics stack: IAP, ad mediation, Firebase, push",
+      "Seasonal event systems reused across the studio's catalogue",
+      "Monetization stack: Unity IAP, RevenueCat, five ad networks, Firebase, OneSignal",
     ],
-    tech: ["Unity", "C#", "Dependency Injection", "Event-Driven", "Strategy Pattern", "Unity IAP", "Firebase"],
+    tech: ["Unity", "C#", "Zenject", "Event-Driven", "Strategy Pattern", "Addressables", "Unity IAP", "RevenueCat", "Firebase"],
   },
   {
     ...store["match-monsters"],
@@ -75,12 +78,11 @@ export const games = [
     summary:
       "A 3D match puzzle set in a household move, with monsters helping the player clear each room.",
     owned: [
-      "Gameplay features and level content pipeline",
-      "UI/UX flows across the title",
-      "Monetization and analytics instrumentation",
+      "Gameplay features, UI/UX flows and the level content pipeline",
+      "Monetization and analytics stack: Unity IAP, ad mediation, Firebase",
+      "Seasonal event content on the studio's shared live-ops pattern",
     ],
     tech: ["Unity", "C#", "3D Match", "Level Pipeline", "Unity IAP", "Firebase"],
-    needsDetail: true,
   },
   {
     ...store["money-dash"],
@@ -91,31 +93,10 @@ export const games = [
     summary:
       "An idle banking tycoon — grow a single branch into a network that earns around the clock.",
     owned: [
-      "Gameplay features and progression systems",
-      "UI/UX flows across the title",
-      "Monetization and analytics instrumentation",
+      "Gameplay features, progression systems and UI/UX flows",
+      "Monetization and analytics stack: Unity IAP, ad mediation, Firebase",
+      "Prototype through post-launch live operation",
     ],
-    tech: ["Unity", "C#", "Idle Economy", "Unity IAP", "Firebase"],
-    needsDetail: true,
-  },
-  {
-    slug: "market-master",
-    title: "Market Master: Idle Shopping",
-    studio: "Veloxia Technology",
-    years: "2021 — 2024",
-    roleTitle: "Game Developer",
-    genres: ["Simulation"],
-    showRating: false,
-    delisted: true,
-    summary:
-      "An idle shopping simulation, released on Google Play. Veloxia has since withdrawn its Android " +
-      "catalogue, so the store listing is no longer public.",
-    owned: [
-      "Gameplay features and content pipeline",
-      "UI/UX flows across the title",
-      "Monetization and analytics instrumentation",
-    ],
-    tech: ["Unity", "C#", "Idle Economy", "Unity IAP", "Firebase"],
-    needsDetail: true,
+    tech: ["Unity", "C#", "Idle Economy", "Unity IAP", "Firebase", "OneSignal"],
   },
 ];
