@@ -1,0 +1,208 @@
+---
+// Schematic diagrams for the case studies. Inline SVG, theme colours by CSS
+// variable, no library. Each one shows the mechanism the section describes.
+const { name } = Astro.props;
+---
+
+{
+  name === "save" && (
+    <figure class="diagram">
+      <svg viewBox="0 0 760 320" role="img" aria-labelledby="d-save-t">
+        <title id="d-save-t">
+          Thirteen feature services inherit one generic save base, which serialises through shared
+          settings to a local file and, past an integrity guard, to PlayFab.
+        </title>
+
+        <g class="d-stack">
+          <rect x="8" y="46" width="150" height="42" rx="6" />
+          <rect x="14" y="56" width="150" height="42" rx="6" />
+          <rect x="20" y="66" width="150" height="42" rx="6" class="d-fill" />
+          <text x="95" y="87" class="d-label" text-anchor="middle">13 save domains</text>
+          <text x="95" y="128" class="d-sub" text-anchor="middle">Progression, Customization,</text>
+          <text x="95" y="142" class="d-sub" text-anchor="middle">Achievements, LiveOps…</text>
+        </g>
+
+        <path d="M170 87 H208" class="d-arrow" />
+
+        <rect x="210" y="44" width="190" height="86" rx="8" class="d-box d-accent" />
+        <text x="305" y="72" class="d-label" text-anchor="middle">DataManagementService</text>
+        <text x="305" y="90" class="d-label d-mono" text-anchor="middle">&lt;TData&gt;</text>
+        <text x="305" y="114" class="d-sub" text-anchor="middle">load · migrate · debounce · dispose</text>
+
+        <path d="M305 130 V160" class="d-arrow" />
+
+        <rect x="212" y="162" width="186" height="42" rx="6" class="d-box" />
+        <text x="305" y="180" class="d-label" text-anchor="middle">Shared serializer settings</text>
+        <text x="305" y="196" class="d-sub" text-anchor="middle">one contract, both stores</text>
+
+        <path d="M250 204 V238 H190 V262" class="d-arrow" />
+        <path d="M360 204 V238 H470 V262" class="d-arrow" />
+
+        <rect x="100" y="264" width="180" height="42" rx="6" class="d-box" />
+        <text x="190" y="291" class="d-label" text-anchor="middle">Local file</text>
+
+        <rect x="440" y="216" width="230" height="40" rx="6" class="d-box d-guard" />
+        <text x="555" y="234" class="d-label" text-anchor="middle">Integrity guard</text>
+        <text x="555" y="249" class="d-sub" text-anchor="middle">refuses an empty overwrite</text>
+
+        <path d="M555 256 V264" class="d-arrow" />
+        <rect x="465" y="264" width="180" height="42" rx="6" class="d-box" />
+        <text x="555" y="291" class="d-label" text-anchor="middle">PlayFab cloud save</text>
+
+        <text x="690" y="88" class="d-sub" text-anchor="middle">0.5s</text>
+        <text x="690" y="103" class="d-sub" text-anchor="middle">debounce</text>
+        <path d="M400 87 H660" class="d-arrow d-dash" />
+      </svg>
+    </figure>
+  )
+}
+
+{
+  name === "catalogs" && (
+    <figure class="diagram">
+      <svg viewBox="0 0 760 300" role="img" aria-labelledby="d-cat-t">
+        <title id="d-cat-t">
+          One boot catalog of 137 entries loads at startup; three larger domains load additively on
+          their own triggers.
+        </title>
+
+        <rect x="20" y="26" width="170" height="62" rx="8" class="d-box d-accent" />
+        <text x="105" y="50" class="d-label" text-anchor="middle">App start</text>
+        <text x="105" y="70" class="d-sub" text-anchor="middle">Addressables.InitializeAsync</text>
+
+        <path d="M190 57 H250" class="d-arrow" />
+
+        <rect x="252" y="26" width="230" height="62" rx="8" class="d-box d-fill" />
+        <text x="367" y="50" class="d-label" text-anchor="middle">Boot catalog</text>
+        <text x="367" y="70" class="d-sub d-mono" text-anchor="middle">~137 entries · ~200 KB</text>
+
+        <text x="612" y="52" class="d-sub" text-anchor="middle">UI · fonts · databases</text>
+        <text x="612" y="68" class="d-sub" text-anchor="middle">core narrative runtime</text>
+
+        <path d="M367 88 V116" class="d-arrow d-dash" />
+        <text x="367" y="134" class="d-sub" text-anchor="middle">loaded additively, on trigger</text>
+
+        <rect x="20" y="150" width="230" height="80" rx="8" class="d-box" />
+        <text x="135" y="176" class="d-label" text-anchor="middle">Narrative content</text>
+        <text x="135" y="195" class="d-sub d-mono" text-anchor="middle">~2,521 entries</text>
+        <text x="135" y="216" class="d-sub" text-anchor="middle">first chat or date</text>
+
+        <rect x="266" y="150" width="230" height="80" rx="8" class="d-box" />
+        <text x="381" y="176" class="d-label" text-anchor="middle">Photos</text>
+        <text x="381" y="195" class="d-sub d-mono" text-anchor="middle">~4,170 entries</text>
+        <text x="381" y="216" class="d-sub" text-anchor="middle">album, profile, gallery</text>
+
+        <rect x="512" y="150" width="228" height="80" rx="8" class="d-box" />
+        <text x="626" y="176" class="d-label" text-anchor="middle">Auxiliary</text>
+        <text x="626" y="195" class="d-sub d-mono" text-anchor="middle">~312 entries</text>
+        <text x="626" y="216" class="d-sub" text-anchor="middle">background, after login</text>
+
+        <path d="M135 250 H626" class="d-arrow d-dash" />
+        <text x="380" y="277" class="d-sub" text-anchor="middle">
+          delivered remotely over Unity CCD · updated without a store release
+        </text>
+      </svg>
+    </figure>
+  )
+}
+
+{
+  name === "liveops" && (
+    <figure class="diagram">
+      <svg viewBox="0 0 760 300" role="img" aria-labelledby="d-lo-t">
+        <title id="d-lo-t">
+          Remote configuration feeds an event core, which drives two event shapes and offers popups to
+          a priority queue rather than opening its own windows.
+        </title>
+
+        <rect x="20" y="24" width="180" height="56" rx="8" class="d-box" />
+        <text x="110" y="47" class="d-label" text-anchor="middle">Remote config</text>
+        <text x="110" y="65" class="d-sub" text-anchor="middle">windows, content, rewards</text>
+
+        <rect x="20" y="100" width="180" height="56" rx="8" class="d-box" />
+        <text x="110" y="123" class="d-label" text-anchor="middle">Seasonal packages</text>
+        <text x="110" y="141" class="d-sub" text-anchor="middle">art, copy, configuration</text>
+
+        <path d="M200 52 H262 V80" class="d-arrow" />
+        <path d="M200 128 H262 V100" class="d-arrow" />
+
+        <rect x="264" y="62" width="212" height="80" rx="8" class="d-box d-accent" />
+        <text x="370" y="90" class="d-label" text-anchor="middle">Event core</text>
+        <text x="370" y="110" class="d-sub" text-anchor="middle">database · activity windows</text>
+        <text x="370" y="126" class="d-sub" text-anchor="middle">progress · transactions</text>
+
+        <path d="M370 142 V170" class="d-arrow" />
+        <rect x="196" y="172" width="160" height="46" rx="6" class="d-box d-fill" />
+        <text x="276" y="192" class="d-label" text-anchor="middle">Special sales</text>
+        <text x="276" y="208" class="d-sub" text-anchor="middle">windowed offer</text>
+
+        <rect x="384" y="172" width="160" height="46" rx="6" class="d-box d-fill" />
+        <text x="464" y="192" class="d-label" text-anchor="middle">Endless offers</text>
+        <text x="464" y="208" class="d-sub" text-anchor="middle">stepped claim</text>
+
+        <path d="M476 102 H560" class="d-arrow" />
+        <rect x="562" y="62" width="178" height="80" rx="8" class="d-box d-guard" />
+        <text x="651" y="90" class="d-label" text-anchor="middle">Popup queue</text>
+        <text x="651" y="110" class="d-sub" text-anchor="middle">priority scheduling</text>
+        <text x="651" y="126" class="d-sub" text-anchor="middle">one window at a time</text>
+
+        <path d="M370 218 V250" class="d-arrow d-dash" />
+        <text x="370" y="270" class="d-sub" text-anchor="middle">
+          progress persisted as a normal save domain, inside the integrity guard
+        </text>
+      </svg>
+    </figure>
+  )
+}
+
+{
+  name === "aichat" && (
+    <figure class="diagram">
+      <svg viewBox="0 0 760 300" role="img" aria-labelledby="d-ai-t">
+        <title id="d-ai-t">
+          A player message is gated by subscription, assembled with character settings and conversation
+          memory, routed through a gateway, and streamed back with cancellation and a report path.
+        </title>
+
+        <rect x="16" y="112" width="132" height="56" rx="8" class="d-box" />
+        <text x="82" y="136" class="d-label" text-anchor="middle">Player message</text>
+        <text x="82" y="154" class="d-sub" text-anchor="middle">chat view</text>
+
+        <path d="M148 140 H190" class="d-arrow" />
+        <rect x="192" y="112" width="120" height="56" rx="8" class="d-box d-guard" />
+        <text x="252" y="136" class="d-label" text-anchor="middle">Paywall gate</text>
+        <text x="252" y="154" class="d-sub" text-anchor="middle">subscription</text>
+
+        <path d="M312 140 H354" class="d-arrow" />
+
+        <rect x="356" y="96" width="176" height="88" rx="8" class="d-box d-accent" />
+        <text x="444" y="122" class="d-label" text-anchor="middle">Context assembly</text>
+        <text x="444" y="142" class="d-sub" text-anchor="middle">character personality</text>
+        <text x="444" y="158" class="d-sub" text-anchor="middle">conversation memory</text>
+        <text x="444" y="174" class="d-sub" text-anchor="middle">within a token budget</text>
+
+        <rect x="356" y="24" width="176" height="44" rx="6" class="d-box d-fill" />
+        <text x="444" y="42" class="d-label" text-anchor="middle">Authored settings</text>
+        <text x="444" y="58" class="d-sub" text-anchor="middle">per character, no build</text>
+        <path d="M444 68 V94" class="d-arrow d-dash" />
+
+        <path d="M532 140 H578" class="d-arrow" />
+        <rect x="580" y="112" width="164" height="56" rx="8" class="d-box" />
+        <text x="662" y="136" class="d-label" text-anchor="middle">Model gateway</text>
+        <text x="662" y="154" class="d-sub" text-anchor="middle">routing · per-model cost</text>
+
+        <path d="M662 168 V206 H82 V232" class="d-arrow" />
+        <text x="372" y="200" class="d-sub" text-anchor="middle">streamed tokens · cancellable mid-response</text>
+
+        <rect x="16" y="234" width="132" height="46" rx="6" class="d-box d-fill" />
+        <text x="82" y="254" class="d-label" text-anchor="middle">Chat bubble</text>
+        <text x="82" y="270" class="d-sub" text-anchor="middle">token by token</text>
+
+        <path d="M148 257 H202" class="d-arrow d-dash" />
+        <rect x="204" y="234" width="170" height="46" rx="6" class="d-box d-guard" />
+        <text x="289" y="254" class="d-label" text-anchor="middle">Report flow</text>
+        <text x="289" y="270" class="d-sub" text-anchor="middle">in-chat moderation</text>
+      </svg>
+    </figure>
+  )
+}

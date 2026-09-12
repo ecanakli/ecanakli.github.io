@@ -1,0 +1,103 @@
+---
+import Base from "../../layouts/Base.astro";
+import Diagram from "../../components/Diagram.astro";
+import { systems } from "../../data/systems.js";
+import { profile } from "../../data/site.js";
+
+export function getStaticPaths() {
+  return systems.map((s, i) => ({
+    params: { slug: s.slug },
+    props: {
+      system: s,
+      prev: systems[(i - 1 + systems.length) % systems.length],
+      next: systems[(i + 1) % systems.length],
+    },
+  }));
+}
+
+const { system, prev, next } = Astro.props;
+const title = `${system.title} | Emre Çanaklı`;
+---
+
+<Base title={title} description={system.hook}>
+  <article class="study">
+    <div class="wrap">
+      <a class="back" href="/#systems">← All case studies</a>
+
+      <p class="eyebrow study-eyebrow">
+        Case study {system.number} · {system.game} · {system.studio} · {system.year}
+      </p>
+      <h1 class="study-title">{system.title}</h1>
+      <p class="study-hook">{system.hook}</p>
+
+      <dl class="study-facts">
+        <div>
+          <dt>My role</dt>
+          <dd>Senior Unity Developer. Designed, built and maintained this system.</dd>
+        </div>
+        <div>
+          <dt>Constraint</dt>
+          <dd>{system.constraint}</dd>
+        </div>
+        <div>
+          <dt>Outcome</dt>
+          <dd>{system.outcome}</dd>
+        </div>
+        <div>
+          <dt>Stack</dt>
+          <dd class="study-stack">{system.stack.map((s) => <span class="chip">{s}</span>)}</dd>
+        </div>
+      </dl>
+
+      {
+        system.sections.map((sec) => (
+          <section class="study-section reveal">
+            <h2>{sec.heading}</h2>
+
+            {sec.body?.map((p) => <p>{p}</p>)}
+
+            {sec.diagram && <Diagram name={sec.diagram} />}
+
+            {sec.decisions && (
+              <div class="decisions">
+                {sec.decisions.map((d) => (
+                  <div class="decision">
+                    <p class="decision-choice">{d.choice}</p>
+                    <p class="decision-instead">
+                      <span>instead of</span> {d.instead}
+                    </p>
+                    <p class="decision-because">{d.because}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        ))
+      }
+
+      <p class="study-note">
+        This describes architecture and the reasoning behind it. No employer source code is
+        reproduced here.
+      </p>
+
+      <nav class="study-nav">
+        <a href={`/systems/${prev.slug}`}>
+          <span class="eyebrow">Previous</span>
+          <span>{prev.title}</span>
+        </a>
+        <a href={`/systems/${next.slug}`} class="study-nav-next">
+          <span class="eyebrow">Next</span>
+          <span>{next.title}</span>
+        </a>
+      </nav>
+
+      <div class="study-cta">
+        <p class="lede">Building something that has to stay up after launch?</p>
+        <div class="hero-actions" style="margin-top:1rem">
+          <a class="btn btn-primary" href={`mailto:${profile.email}`}>Get in touch</a>
+          <a class="btn" href="/#work">See the shipped titles</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Base>

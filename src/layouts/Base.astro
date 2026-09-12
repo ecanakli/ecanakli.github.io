@@ -83,18 +83,52 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </footer>
 
     <script is:inline>
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) {
-            if (e.isIntersecting) {
-              e.target.classList.add("in");
-              io.unobserve(e.target);
-            }
+      // Reveal-on-scroll, deliberately not an IntersectionObserver.
+      //
+      // Content is visible by default and only elements that start below the
+      // fold are ever hidden, so a script failure or a missed callback cannot
+      // leave text unreadable. A plain scroll check also cannot skip an element
+      // the way an observer does when an anchor jump moves it past the viewport
+      // in a single frame.
+      (() => {
+        const els = [...document.querySelectorAll(".reveal")];
+        if (!els.length) return;
+
+        const trigger = () => window.innerHeight * 0.94;
+        let pending = [];
+
+        for (const el of els) {
+          if (el.getBoundingClientRect().top > trigger()) {
+            el.classList.add("pending");
+            pending.push(el);
           }
-        },
-        { rootMargin: "0px 0px -8% 0px" }
-      );
-      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+        }
+
+        let queued = false;
+        const check = () => {
+          queued = false;
+          const line = trigger();
+          pending = pending.filter((el) => {
+            if (el.getBoundingClientRect().top > line) return true;
+            el.classList.add("in");
+            return false;
+          });
+          if (!pending.length) {
+            removeEventListener("scroll", onScroll);
+            removeEventListener("resize", onScroll);
+          }
+        };
+
+        const onScroll = () => {
+          if (queued) return;
+          queued = true;
+          requestAnimationFrame(check);
+        };
+
+        addEventListener("scroll", onScroll, { passive: true });
+        addEventListener("resize", onScroll);
+        onScroll();
+      })();
     </script>
   </body>
 </html>

@@ -836,19 +836,22 @@ ul {
 
 /* ---- Motion --------------------------------------------------------- */
 
-.reveal {
+/* Visible by default. Only elements the script marks as starting below the
+   fold are hidden, so nothing depends on JavaScript to be readable. */
+
+.reveal.pending {
   opacity: 0;
   transform: translateY(14px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.reveal.in {
+.reveal.pending.in {
   opacity: 1;
   transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal.pending {
     opacity: 1;
     transform: none;
     transition: none;
@@ -867,4 +870,307 @@ html {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* ---- Case study page ------------------------------------------------ */
+
+.study {
+  padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 7vw, 5rem);
+}
+
+.study .wrap {
+  max-width: 880px;
+}
+
+.back {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--paper-dim);
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.back:hover {
+  color: var(--accent);
+}
+
+.study-eyebrow {
+  margin-bottom: 1rem;
+}
+
+.study-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  max-width: 22ch;
+}
+
+.study-hook {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--paper-dim);
+  max-width: 54ch;
+  margin-top: 1.25rem;
+}
+
+.study-facts {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+}
+
+.study-facts > div {
+  background: var(--ink);
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  gap: 1.25rem;
+  padding: 0.85rem 1.1rem;
+}
+
+.study-facts dt {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--paper-faint);
+  padding-top: 0.2em;
+}
+
+.study-facts dd {
+  margin: 0;
+  color: var(--paper-dim);
+  font-size: 0.92rem;
+}
+
+.study-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.study-section {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.study-section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.study-section p {
+  color: var(--paper-dim);
+  font-size: clamp(1rem, 1.4vw, 1.06rem);
+  line-height: 1.72;
+  max-width: 68ch;
+  margin-bottom: 1rem;
+}
+
+/* Decisions */
+
+.decisions {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+
+.decision {
+  background: var(--ink);
+  padding: 1.15rem 1.25rem;
+}
+
+.decision-choice {
+  color: var(--paper) !important;
+  font-weight: 500;
+  margin-bottom: 0.25rem !important;
+}
+
+.decision-choice::before {
+  content: "Chose ";
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.decision-instead {
+  font-size: 0.88rem !important;
+  color: var(--paper-faint) !important;
+  margin-bottom: 0.6rem !important;
+}
+
+.decision-instead span {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.decision-because {
+  margin-bottom: 0 !important;
+  font-size: 0.95rem !important;
+}
+
+/* Diagram */
+
+.diagram {
+  margin: 1.75rem 0;
+  padding: 1.25rem;
+  background: var(--ink-sunken);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.diagram svg {
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+}
+
+.d-box,
+.d-stack rect {
+  fill: var(--ink-raised);
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.d-fill {
+  fill: rgba(217, 164, 65, 0.08);
+  stroke: var(--accent-dim);
+}
+
+.d-accent {
+  fill: rgba(217, 164, 65, 0.13);
+  stroke: var(--accent);
+}
+
+.d-guard {
+  fill: rgba(233, 230, 224, 0.04);
+  stroke: var(--paper-faint);
+  stroke-dasharray: 4 3;
+}
+
+.d-label {
+  fill: var(--paper);
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+.d-sub {
+  fill: var(--paper-faint);
+  font-family: var(--font-body);
+  font-size: 11px;
+}
+
+.d-mono {
+  font-family: var(--font-mono);
+}
+
+.d-arrow {
+  fill: none;
+  stroke: var(--accent-dim);
+  stroke-width: 1.4;
+}
+
+.d-dash {
+  stroke-dasharray: 5 4;
+  stroke: var(--paper-faint);
+}
+
+/* Footer of a study */
+
+.study-note {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding: 0.85rem 1.1rem;
+  border-left: 2px solid var(--accent-dim);
+  background: var(--ink-raised);
+  font-size: 0.85rem;
+  color: var(--paper-faint);
+}
+
+.study-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.study-nav a {
+  background: var(--ink);
+  padding: 1.1rem 1.25rem;
+  display: grid;
+  gap: 0.4rem;
+  color: var(--paper-dim);
+  font-size: 0.92rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.study-nav a:hover {
+  background: var(--ink-raised);
+  color: var(--paper);
+}
+
+.study-nav-next {
+  text-align: right;
+}
+
+.study-cta {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-top: clamp(2rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 640px) {
+  .study-facts > div {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .study-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .study-nav-next {
+    text-align: left;
+  }
+}
+
+/* Systems list items link into their case study */
+
+.system-go {
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 0.9em;
+  margin-left: 0.5rem;
+  opacity: 0;
+  display: inline-block;
+  transform: translateX(-6px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.system:hover .system-go,
+.system:focus-visible .system-go {
+  opacity: 1;
+  transform: none;
+}
+
+.system:hover .system-title {
+  color: var(--accent);
 }

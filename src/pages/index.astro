@@ -122,7 +122,7 @@ const description =
     <div class="wrap">
       <div class="section-head">
         <h2 class="section-title">Systems I owned</h2>
-        <p class="eyebrow">Case studies · in progress</p>
+        <p class="eyebrow">Four case studies</p>
       </div>
 
       <p class="lede" style="margin-bottom:clamp(2rem,4vw,3rem)">
@@ -134,10 +134,13 @@ const description =
       <div class="systems">
         {
           systems.map((s) => (
-            <article class="system reveal">
+            <a class="system reveal" href={`/systems/${s.slug}`}>
               <div class="system-number">{s.number}</div>
               <div>
-                <h3 class="system-title">{s.title}</h3>
+                <h3 class="system-title">
+                  {s.title}
+                  <span class="system-go" aria-hidden="true">→</span>
+                </h3>
                 <p class="system-hook">{s.hook}</p>
 
                 <dl class="system-facts">
@@ -159,7 +162,7 @@ const description =
                   {s.tags.map((t) => <span class="chip">{t}</span>)}
                 </div>
               </div>
-            </article>
+            </a>
           ))
         }
       </div>
