@@ -556,99 +556,136 @@ export const systems = [
   },
 
   {
-    slug: "llm-companion-chat",
+    slug: "experiment-driven-config",
     number: "06",
-    title: "Putting a language model inside the gameplay loop",
+    title: "Remote config a designer can A/B test without a build",
     game: "Love Eden",
     studio: "United Tech",
-    year: "2026",
+    year: "2025",
     context: "Love Eden · United Tech",
     hook:
-      "Per-character personality, conversation memory, streamed replies with cancellation, a paywall on " +
-      "the meter and a moderation path, shipped to players rather than demoed.",
-    constraint: "Real users, real latency, real moderation risk, per-token cost",
-    outcome: "Generative AI running in a production game with a live audience",
-    tags: ["LLM Integration", "Streaming", "Moderation", "UniTask"],
-    stack: ["C#", "UniTask", "OpenRouter", "StrangeIoC", "PlayFab"],
+      "Every remote value used to arrive encoded, through a bespoke service per feature, identical " +
+      "for every player. Thirteen feature configs are now plain JSON that PlayFab Experiments can " +
+      "change per variant.",
+    constraint: "A live title, no experiment infrastructure, and a backend that may be slow or down",
+    outcome: "13 feature configs A/B-testable without a build, variant data in Amplitude automatically",
+    tags: ["Remote Config", "A/B Testing", "PlayFab Experiments", "Amplitude"],
+    stack: ["C#", "PlayFab Experiments", "PlayFab Title Data", "Amplitude", "UniTask"],
 
     sections: [
       {
         heading: "The problem",
         body: [
-          "Love Eden's story content is authored. An AI companion chat is the opposite: unbounded, " +
-            "unscripted, generated at request time. Putting one inside a shipped romance game raises " +
-            "four problems at once, and none of them is the model call. The character has to stay in " +
-            "character. The conversation has to remember what was said. The feature has to cost less " +
-            "than it earns. And a system generating text to real users needs a path for when that text " +
-            "is wrong.",
+          "Every remote value came through the backend SDK in an encoded, compressed format that nobody " +
+            "could read or edit directly. Each feature had grown its own config service with its own " +
+            "retry logic, its own error handling and its own idea of what to do when the call failed.",
+          "And every player got the same values. There was no way to A/B test anything, which meant " +
+            "every tuning decision on ad cooldowns, reward amounts, first-purchase offers and gift " +
+            "sizes was an argument rather than a measurement.",
         ],
       },
       {
         heading: "What I built",
         body: [
-          "Character personality is configuration, not code. Each character carries its own prompt and " +
-            "behaviour settings, authored alongside the rest of its content, so writers tune voice " +
-            "without an engineer in the loop.",
-          "A memory service assembles the context for each request within a budget, because context is " +
-            "the thing you pay for. Requests go through a gateway rather than direct to one vendor, with " +
-            "a pricing service alongside it, so model choice stays an operational decision and cost is " +
-            "visible per model rather than discovered in a monthly invoice.",
-          "Responses stream. A model answering in one block after several seconds reads as a frozen " +
-            "game, so replies arrive token by token and every request is cancellable: if the player " +
-            "leaves mid-answer the request is torn down rather than left to complete into a view that no " +
-            "longer exists. Access is gated on subscription state, and an in-chat reporting flow lets a " +
-            "player flag a response.",
+          "One shared loader for all of it. Config keys are now plain JSON in PlayFab Title Data, " +
+            "editable in the dashboard by whoever owns the number. Thirteen feature configs run on it, " +
+            "covering rewarded and interstitial ads, maintenance mode, free transactions, the club " +
+            "feature, the first gem pack, the welcome gift, non-payer offers and utility popups.",
+          "The loader reads the Title Data value for a key, fetches that player's treatment variables " +
+            "from PlayFab Experiments, and merges them on top field by field. That merge is the part " +
+            "that matters. The general PlayFab guidance is that treatment variables require client code " +
+            "to read them explicitly; here a designer can name a variable after an existing config " +
+            "field and it takes effect with no code change at all.",
+          "Variant assignments are then pushed into Amplitude as user properties, one per experiment " +
+            "plus a combined one, along with an assignment event per session. Any existing event can be " +
+            "broken down by experiment without a single line of per-experiment engineering, and it " +
+            "shows readable variant names rather than ID hashes because the loader maps them first.",
+          "There is a floor under all of it. Every config ships with hard-coded client defaults, and " +
+            "anything that fails or takes longer than five seconds falls through to them, so a slow or " +
+            "broken backend never blocks the game. Guest players skip the whole path: no network call, " +
+            "no cost.",
         ],
-        diagram: "aichat",
+        diagram: "config",
+      },
+      {
+        heading: "Before and after",
+        table: {
+          head: ["", "Before", "After"],
+          rows: [
+            ["Config format", "Encoded, unreadable", "Plain JSON in the dashboard"],
+            ["Services", "One bespoke service per feature", "One shared loader"],
+            ["Per-player values", "Same for everyone", "Per-variant via Experiments"],
+            ["Failure behaviour", "No standard timeout or fallback", "5s timeout, validation, defaults"],
+            ["Experiment reporting", "None", "Automatic, in Amplitude"],
+          ],
+        },
       },
       {
         heading: "Decisions and trade-offs",
         decisions: [
           {
-            choice: "A gateway in front of the model, not a direct vendor SDK",
-            instead: "integrating one provider's client library",
+            choice: "Merge treatment variables automatically, field by field",
+            instead: "requiring each feature to read the variables it cares about",
             because:
-              "Model pricing and quality move faster than app releases. A gateway makes switching a " +
-              "configuration change and makes per-model cost visible while the feature is live.",
+              "Reading them explicitly is the documented approach, and it makes every experiment a code " +
+              "change. That is the difference between an experimentation platform and an " +
+              "experimentation ticket queue. Merging generically means the people who design the test " +
+              "can run it.",
           },
           {
-            choice: "Streamed responses with hard cancellation",
-            instead: "awaiting the full completion",
+            choice: "Plain JSON in Title Data",
+            instead: "keeping the encoded, compressed payloads",
             because:
-              "Perceived latency is the whole experience for a chat feature. Streaming also forces the " +
-              "cancellation question to be answered properly, which is what stops a half-finished reply " +
-              "from writing into a destroyed view when the player backs out.",
+              "Encoding bought a little bandwidth and cost all the legibility. Nobody could see what " +
+              "was live without running the game, which makes every config incident a debugging session " +
+              "instead of a glance at a dashboard.",
           },
           {
-            choice: "Personality as authored content",
-            instead: "prompts embedded in code",
+            choice: "Hard-coded client defaults behind a five-second timeout",
+            instead: "waiting for config, or shipping empty values",
             because:
-              "Writers own character voice. Anything they cannot change without a build will either stay " +
-              "wrong or turn an engineer into a bottleneck on every tuning pass.",
+              "A config fetch sits in the launch path. If the backend is slow, the choice is between a " +
+              "player staring at a loading screen and a player playing with last-known-good numbers. " +
+              "The second one is always better, and it means a backend outage is not an outage.",
           },
           {
-            choice: "A subscription gate on the feature",
-            instead: "free access with a rate limit",
+            choice: "Guests skip the config path entirely",
+            instead: "treating every player the same",
             because:
-              "Every message has a real marginal cost. A rate limit caps the damage but does not pay for " +
-              "it, and a feature that loses money per engaged user is a feature that gets cut.",
+              "Guests cannot be in an experiment and are the bulk of the traffic. Calling for them " +
+              "bought nothing and cost a request per launch.",
           },
           {
-            choice: "In-product reporting from day one",
-            instead: "adding moderation tooling after launch",
+            choice: "Both config systems coexist, with new features on the new one",
+            instead: "a big-bang migration of every legacy feature",
             because:
-              "A generative feature will produce something it should not have. Shipping without a path " +
-              "for that is a decision to hear about it publicly first.",
+              "Migrating all of them at once on a live title is a large change with no user-visible " +
+              "benefit and a lot of ways to break a number somebody depends on. Each remaining feature " +
+              "is a small, documented job instead.",
           },
         ],
       },
       {
         heading: "Result",
         body: [
-          "The companion chat shipped into a live title with a real audience, gated behind subscription " +
-            "and instrumented for cost, engagement and reports. The part worth keeping is not the model " +
-            "call: it is that character voice is content, cost is measured per model, cancellation is " +
-            "handled properly, and there is a route for the answers that come out wrong.",
+          "Thirteen feature configs became testable without a build, and four more have been added " +
+            "since in the same pattern. The biggest consumer is the popup system: an experiment can " +
+            "suppress a popup for a variant, or only when it is triggered from a particular place in " +
+            "the game, and because the filter runs before the popup is constructed a suppressed popup " +
+            "costs nothing.",
+          "The measurable part is that any analyst can open any event in Amplitude and break it down " +
+            "by experiment, with no engineering involvement. Experimentation stopped being a feature " +
+            "request.",
+        ],
+      },
+      {
+        heading: "What I would change",
+        body: [
+          "A treatment variable whose name matches no config field does nothing. It is not an error, " +
+            "nothing warns anyone, and the experiment runs to completion changing no behaviour at all. " +
+            "That is a whole wasted test and the kind of silence I should not have shipped. The fix is " +
+            "cheap, a validation pass that lists unmatched variable names, and it belongs in the loader " +
+            "rather than in a documented operating rule.",
         ],
       },
     ],

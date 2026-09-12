@@ -65,6 +65,59 @@ const { name } = Astro.props;
 }
 
 {
+  name === "config" && (
+    <figure class="diagram">
+      <svg viewBox="0 0 760 300" role="img" aria-labelledby="d-cfg-t">
+        <title id="d-cfg-t">
+          One loader reads plain JSON from Title Data, merges the player's treatment variables on top
+          field by field, falls back to hard-coded defaults on timeout, and reports the variant to
+          Amplitude.
+        </title>
+
+        <rect x="16" y="28" width="176" height="56" rx="8" class="d-box" />
+        <text x="104" y="52" class="d-label" text-anchor="middle">Feature asks for a key</text>
+        <text x="104" y="70" class="d-sub" text-anchor="middle">one loader, thirteen configs</text>
+
+        <path d="M192 56 H240" class="d-arrow" />
+
+        <rect x="242" y="16" width="200" height="40" rx="6" class="d-box d-fill" />
+        <text x="342" y="33" class="d-label" text-anchor="middle">Title Data</text>
+        <text x="342" y="48" class="d-sub" text-anchor="middle">plain JSON, editable in dashboard</text>
+
+        <rect x="242" y="62" width="200" height="40" rx="6" class="d-box d-accent" />
+        <text x="342" y="79" class="d-label" text-anchor="middle">Treatment variables</text>
+        <text x="342" y="94" class="d-sub" text-anchor="middle">this player's variant</text>
+
+        <path d="M442 36 H482 V52" class="d-arrow" />
+        <path d="M442 82 H482 V66" class="d-arrow" />
+
+        <rect x="484" y="38" width="176" height="44" rx="8" class="d-box d-accent" />
+        <text x="572" y="56" class="d-label" text-anchor="middle">Merge, field by field</text>
+        <text x="572" y="72" class="d-sub" text-anchor="middle">variables win, no code change</text>
+
+        <path d="M572 82 V116" class="d-arrow" />
+        <rect x="484" y="118" width="176" height="36" rx="6" class="d-box" />
+        <text x="572" y="141" class="d-label" text-anchor="middle">Config delivered</text>
+
+        <rect x="16" y="118" width="176" height="56" rx="8" class="d-box d-guard" />
+        <text x="104" y="142" class="d-label" text-anchor="middle">Hard-coded defaults</text>
+        <text x="104" y="160" class="d-sub" text-anchor="middle">on 5s timeout, or a guest</text>
+        <path d="M104 118 V90 H192 V56" class="d-arrow d-dash" />
+
+        <line x1="16" y1="196" x2="744" y2="196" class="d-rule" />
+
+        <rect x="242" y="218" width="418" height="56" rx="8" class="d-box d-fill" />
+        <text x="451" y="242" class="d-label" text-anchor="middle">Amplitude: variant as a user property, per session</text>
+        <text x="451" y="260" class="d-sub" text-anchor="middle">
+          any existing event breaks down by experiment, no per-test engineering
+        </text>
+        <path d="M572 154 V218" class="d-arrow d-dash" />
+      </svg>
+    </figure>
+  )
+}
+
+{
   name === "login" && (
     <figure class="diagram">
       <svg viewBox="0 0 760 300" role="img" aria-labelledby="d-login-t">
