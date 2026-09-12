@@ -400,6 +400,13 @@ export const systems = [
           "Six offer systems run on it: themed popups selling gem packages, a ladder of offers where " +
             "buying one unlocks the next, a season pass with free and premium tracks, a themed reward " +
             "calendar, welcome gifts and segment-targeted shop packs.",
+          "Alongside them sits an in-game mailbox fed from a web dashboard, which is how a campaign " +
+            "reaches a specific audience rather than everyone. A message's tab is chosen automatically " +
+            "from its type, so an operator picks what the message does and not where it lands, and " +
+            "targeting runs on platform, app version, build number, spending segment and, for " +
+            "character news, whether the player is actually matched with that character. Targeting " +
+            "hides a message from players it does not apply to rather than deleting it, and a test mode " +
+            "bypasses the version filters so a QA device can preview anything.",
           "The backend decides when an offer is live. The game asks which events are active, looks each " +
             "one up by its event ID, and gets back that event's themed prefabs for popup, banner and " +
             "icon. A season is therefore a folder of sprites and prefab variants; no logic is per-theme.",
@@ -463,8 +470,131 @@ export const systems = [
   },
 
   {
-    slug: "attention-surfaces",
+    slug: "customization-and-wardrobe",
     number: "05",
+    title: "A cosmetic system with three ways to pay and a bounded memory cost",
+    game: "Love Eden",
+    studio: "United Tech",
+    year: "2025",
+    context: "Love Eden \u00b7 United Tech",
+    hook:
+      "The only place in the game where a player spends on themselves rather than on a character. " +
+      "Free, gem-priced, ad-unlocked and real-money themed sets, on one screen serving three " +
+      "different product moments.",
+    constraint: "Hundreds of authored assets, a first-run flow that must never dead-end, saves that reference items by ID",
+    outcome: "A repeatable LiveOps revenue beat; past events stay sellable instead of dying with their window",
+    tags: ["Monetization", "Addressables", "Memory", "Content Pipeline"],
+    stack: ["C#", "StrangeIoC", "Addressables", "Unity IAP", "ScriptableObjects", "Amplitude"],
+
+    sections: [
+      {
+        heading: "The problem",
+        body: [
+          "An avatar is built from five slots, each drawing on its own authored catalog, split by " +
+            "gender. Every option is separate art rather than a tint or a palette entry, so the asset " +
+            "count grows with every hairstyle in every colour. A single category can hold forty items " +
+            "and each one needs two sprites: the one worn on the avatar and the thumbnail in the picker.",
+          "On top of that, the same screen has to serve three different product moments. It is the " +
+            "profile's change-your-look surface, the first-time avatar creation during onboarding, and " +
+            "a quick dress-up beat just before a date. Those three want different content, different " +
+            "payment rules and different memory budgets.",
+        ],
+      },
+      {
+        heading: "What I built",
+        body: [
+          "One screen with three flows. The default flow exposes everything: all categories, all " +
+            "payment types, the gem cart and the event tab. The first-run flow is restricted to free " +
+            "content only, deliberately, because a first session must never end in a \"you cannot " +
+            "afford this\" state. The pre-date flow shows hair and outfit and nothing else.",
+          "The two sprites per option are separate assets loaded and released independently, which is " +
+            "what keeps a forty-item category from costing forty full-resolution character sprites to " +
+            "browse. Onboarding assets are explicitly released when the first-run flow ends, so the " +
+            "first-session memory peak does not follow the player into the rest of the app.",
+          "Items are free, gem-priced, or unlocked by watching a rewarded ad. Gem items are not bought " +
+            "one at a time: the player queues up to five, sees a running total, and buys the selection " +
+            "in one transaction. That cart exists only in the default flow.",
+          "The commercial layer is the wardrobe. During an event, a themed set of coordinated pieces " +
+            "sells as a single real-money purchase, and a successful purchase immediately dresses the " +
+            "avatar so the player sees what they paid for. Sets from finished events stay purchasable " +
+            "through an all-sets tab, so a themed look does not have to die with its window, and " +
+            "unowned pieces from an ended event are hidden from the normal grid so they do not look " +
+            "free. Once every set in an event is owned, that event comes off sale and stops occupying " +
+            "a shop slot.",
+        ],
+        diagram: "wardrobe",
+      },
+      {
+        heading: "Decisions and trade-offs",
+        decisions: [
+          {
+            choice: "A set is a sales wrapper, not an inventory object",
+            instead: "storing the set as the owned thing and resolving pieces from it",
+            because:
+              "After purchase the pieces are written into the normal purchased-items list exactly as if " +
+              "they had been bought individually, with a separate record of which sets were bought so " +
+              "the shop does not sell one twice. That means a set piece behaves like any other item: it " +
+              "mixes with non-set items, can be worn partially, and appears in its own category. " +
+              "Modelling the set as an object would have made every one of those a special case.",
+          },
+          {
+            choice: "Two sprites per option, loaded and released independently",
+            instead: "one asset serving both the avatar and the picker",
+            because:
+              "A picker thumbnail and a worn character sprite have nothing in common but the subject. " +
+              "Sharing one asset means either browsing at full resolution or wearing at thumbnail " +
+              "resolution, and the first one is how a cosmetic screen ends up as the memory peak of " +
+              "the whole app.",
+          },
+          {
+            choice: "Removing the runtime colour system rather than repairing it",
+            instead: "leaving the dead code and the colour asset in place",
+            because:
+              "An earlier design tinted hair at runtime and drove skin tone from a shared colour " +
+              "table. Nothing read it any more, the shader component was unused and the save format " +
+              "had no colour field, but the asset still sat there looking authoritative. Deleting it " +
+              "was the easy half. The half that mattered was writing down the consequence for whoever " +
+              "plans content next: a hairstyle in four colours is four assets with four IDs, not one " +
+              "asset and a palette. Colours are not free, and a roadmap built on the opposite " +
+              "assumption would have failed quietly.",
+          },
+          {
+            choice: "The first-run flow shows only free content",
+            instead: "showing everything and letting the player discover the paywall",
+            because:
+              "The first thing a new player does is build their avatar. Ending that on a price they " +
+              "cannot pay is a bad first impression in exchange for a purchase they were never going " +
+              "to make in session one.",
+          },
+          {
+            choice: "Published item IDs are never reused, even after deletion",
+            instead: "recycling IDs from removed content",
+            because:
+              "Saves reference items by ID, so reusing one silently turns a player\u2019s purchased " +
+              "item into a different item. This is currently enforced by discipline rather than " +
+              "tooling, which is the part of it I am least happy with.",
+          },
+        ],
+      },
+      {
+        heading: "Result",
+        body: [
+          "Three revenue paths on one surface, and a themed set drop became a repeatable beat that " +
+            "ships with each seasonal event instead of a bespoke feature each time. The set funnel is " +
+            "instrumented end to end: impression, purchase started, completed, failed with a reason " +
+            "bucket, and equipped.",
+          "One honest note for whoever reads that data. Because a successful purchase auto-equips the " +
+            "set, the equipped count structurally includes automatic equips alongside deliberate ones, " +
+            "and the two are not currently distinguished. Revenue is reported by the purchase event " +
+            "rather than by this funnel, so the money is right; the intent signal is the part to treat " +
+            "carefully.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "attention-surfaces",
+    number: "06",
     title: "Deciding what gets the player's attention, and in what order",
     game: "Love Eden",
     studio: "United Tech",
@@ -557,7 +687,7 @@ export const systems = [
 
   {
     slug: "experiment-driven-config",
-    number: "06",
+    number: "07",
     title: "Remote config a designer can A/B test without a build",
     game: "Love Eden",
     studio: "United Tech",
@@ -673,6 +803,12 @@ export const systems = [
             "suppress a popup for a variant, or only when it is triggered from a particular place in " +
             "the game, and because the filter runs before the popup is constructed a suppressed popup " +
             "costs nothing.",
+          "The email-consent prompt is the clearest example of why this mattered. It has to ask for " +
+            "marketing permission without becoming a nuisance, which means three numbers: how many " +
+            "times a player may ever see it before being permanently suppressed, how many days after " +
+            "a decline before asking again, and whether the feature runs at all. All three are remote " +
+            "configuration and all three are A/B testable, so tuning the prompt is a dashboard edit " +
+            "rather than a release.",
           "The measurable part is that any analyst can open any event in Amplitude and break it down " +
             "by experiment, with no engineering involvement. Experimentation stopped being a feature " +
             "request.",

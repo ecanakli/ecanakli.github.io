@@ -65,6 +65,59 @@ const { name } = Astro.props;
 }
 
 {
+  name === "wardrobe" && (
+    <figure class="diagram">
+      <svg viewBox="0 0 760 300" role="img" aria-labelledby="d-ward-t">
+        <title id="d-ward-t">
+          A themed set sells as one real-money purchase, then dissolves into the player's normal
+          owned-items list while a separate record remembers which sets were bought.
+        </title>
+
+        <rect x="16" y="26" width="150" height="46" rx="6" class="d-box" />
+        <text x="91" y="45" class="d-label" text-anchor="middle">Shop banner</text>
+        <text x="91" y="61" class="d-sub" text-anchor="middle">while the event runs</text>
+
+        <path d="M166 49 H208" class="d-arrow" />
+        <rect x="210" y="26" width="164" height="46" rx="6" class="d-box d-fill" />
+        <text x="292" y="45" class="d-label" text-anchor="middle">Event popup</text>
+        <text x="292" y="61" class="d-sub" text-anchor="middle">one card per set</text>
+
+        <path d="M374 49 H416" class="d-arrow" />
+        <rect x="418" y="26" width="164" height="46" rx="6" class="d-box d-accent" />
+        <text x="500" y="45" class="d-label" text-anchor="middle">Real-money purchase</text>
+        <text x="500" y="61" class="d-sub" text-anchor="middle">the set, not the pieces</text>
+
+        <path d="M500 72 V104" class="d-arrow" />
+
+        <rect x="300" y="106" width="400" height="48" rx="8" class="d-box" />
+        <text x="500" y="126" class="d-label" text-anchor="middle">Pieces written into the normal owned-items list</text>
+        <text x="500" y="143" class="d-sub" text-anchor="middle">a set piece then behaves like any other item</text>
+
+        <rect x="46" y="106" width="228" height="48" rx="8" class="d-box d-guard" />
+        <text x="160" y="126" class="d-label" text-anchor="middle">Separate record of sets bought</text>
+        <text x="160" y="143" class="d-sub" text-anchor="middle">so the shop never sells one twice</text>
+        <path d="M300 130 H276" class="d-arrow d-dash" />
+
+        <path d="M500 154 V186" class="d-arrow" />
+        <rect x="330" y="188" width="180" height="42" rx="6" class="d-box d-fill" />
+        <text x="420" y="205" class="d-label" text-anchor="middle">Auto-equipped</text>
+        <text x="420" y="221" class="d-sub" text-anchor="middle">the player sees what they paid for</text>
+
+        <path d="M510 209 H558" class="d-arrow" />
+        <rect x="560" y="188" width="180" height="42" rx="6" class="d-box" />
+        <text x="650" y="205" class="d-label" text-anchor="middle">Mixed with anything</text>
+        <text x="650" y="221" class="d-sub" text-anchor="middle">worn partially, own category</text>
+
+        <line x1="16" y1="252" x2="744" y2="252" class="d-rule" />
+        <text x="380" y="278" class="d-sub" text-anchor="middle">
+          after the event ends the set stays purchasable; unowned pieces leave the normal grid so they do not look free
+        </text>
+      </svg>
+    </figure>
+  )
+}
+
+{
   name === "config" && (
     <figure class="diagram">
       <svg viewBox="0 0 760 300" role="img" aria-labelledby="d-cfg-t">
