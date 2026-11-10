@@ -84,6 +84,27 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </footer>
 
     <script is:inline>
+      // Mail links also copy the address: without a mail app a mailto click does nothing visible.
+      (() => {
+        document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+          const label = link.textContent;
+          const email = link.getAttribute("href").slice(7);
+          let timer = 0;
+          link.setAttribute("aria-live", "polite");
+          link.addEventListener("click", async () => {
+            let copied = false;
+            try {
+              await navigator.clipboard.writeText(email);
+              copied = true;
+            } catch {}
+            link.textContent = copied ? (label === email ? "Copied to clipboard" : `${email} copied`) : email;
+            clearTimeout(timer);
+            timer = setTimeout(() => (link.textContent = label), 3000);
+          });
+        });
+      })();
+    </script>
+    <script is:inline>
       // Reveal-on-scroll, deliberately not an IntersectionObserver.
       //
       // Content is visible by default and only elements that start below the
