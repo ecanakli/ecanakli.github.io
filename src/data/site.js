@@ -12,12 +12,9 @@ export const profile = {
 };
 
 export const intro =
-  "I have been developing mobile games professionally for five years, working in teams on titles " +
-  "shipped for iOS and Android. I work on the game itself, on mechanics, progression, UI and " +
-  "content pipelines, and on the systems underneath it: save and cloud data, sign-in and account " +
-  "recovery, remote content delivery, seasonal events and monetization. Most of my time goes to " +
-  "what decides whether a title survives its first year, which is how it is structured, how fast " +
-  "it runs on a cheap Android phone, and whether it can keep shipping content after release.";
+  "I have been developing mobile games professionally for five years, in teams shipping for iOS " +
+  "and Android. I work on the game itself, from mechanics and progression to UI, and on the systems " +
+  "a live game runs on: save and cloud data, sign-in, remote content, seasonal events and monetization.";
 
 // Only numbers a stranger can verify from a store page, or count off the shelf.
 // Lines of code and commit counts were here once; they measure typing, not engineering.
@@ -84,5 +81,33 @@ export const stack = [
   {
     group: "Pipeline & Tooling",
     items: ["Custom Editor tooling", "Odin Inspector", "Git / Git LFS", "Jenkins", "Fastlane", "App Store Connect", "Google Play Console"],
+  },
+];
+
+// Public UPM packages: systems rebuilt in every game, extracted with docs and samples.
+export const packages = [
+  {
+    name: "Save System",
+    repo: "https://github.com/ecanakli/UnitySaveSystem",
+    line: "Crash-safe, account-scoped save data for Unity, with optional cloud sync.",
+    tags: ["Persistence", "Cloud sync", "Schema migration"],
+  },
+  {
+    name: "Janitor",
+    repo: "https://github.com/ecanakli/UnityJanitor",
+    line: "Binds UniTask work, DOTween tweens, coroutines and event subscriptions to an owner's lifetime, so nothing outlives its owner.",
+    tags: ["Lifetimes", "UniTask", "DOTween"],
+  },
+  {
+    name: "UIDirector",
+    repo: "https://github.com/ecanakli/UnityUIDirector",
+    line: "Runs screens, popups and overlays under one root: typed keys, awaitable results, one back rule and a priority queue.",
+    tags: ["uGUI", "Navigation", "UniTask"],
+  },
+  {
+    name: "AddressablesDirector",
+    repo: "https://github.com/ecanakli/UnityAddressablesDirector",
+    line: "Loads and releases Addressables content by owner, so no caller ever releases another caller's reference.",
+    tags: ["Addressables", "Memory", "UniTask"],
   },
 ];

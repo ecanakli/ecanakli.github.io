@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { profile, intro, metrics, stack, about } from "../data/site.js";
+import { profile, intro, metrics, stack, about, packages } from "../data/site.js";
 import { games } from "../data/games.js";
 import { systems } from "../data/systems.js";
 
@@ -25,7 +25,7 @@ const description =
       <p class="lede">{intro}</p>
 
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#work">See the work</a>
+        <a class="btn btn-primary" href="#systems">See the work</a>
         <a class="btn" href={profile.cv}>Download CV</a>
         <a class="btn" href={`mailto:${profile.email}`}>Get in touch</a>
       </div>
@@ -44,6 +44,59 @@ const description =
           </div>
         ))
       }
+    </div>
+  </section>
+
+  <!-- Systems -->
+  <section class="section" id="systems">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Systems I owned</h2>
+        <p class="eyebrow">Seven case studies</p>
+      </div>
+
+      <p class="lede" style="margin-bottom:clamp(2rem,4vw,3rem)">
+        A store page says a game shipped. It does not say what was hard about it. These are seven
+        systems from Love Eden that I designed and maintained. Each one covers the problem, the
+        constraint that made it difficult, and the decision I made, including the ones that turned
+        out to be wrong.
+      </p>
+
+      <div class="systems">
+        {
+          systems.map((s) => (
+            <a class="system reveal" href={`/systems/${s.slug}`}>
+              <div class="system-number">{s.number}</div>
+              <div>
+                <h3 class="system-title">
+                  {s.title}
+                  <span class="system-go" aria-hidden="true">→</span>
+                </h3>
+                <p class="system-hook">{s.hook}</p>
+
+                <dl class="system-facts">
+                  <div>
+                    <dt>Context</dt>
+                    <dd>{s.context}</dd>
+                  </div>
+                  <div>
+                    <dt>Constraint</dt>
+                    <dd>{s.constraint}</dd>
+                  </div>
+                  <div>
+                    <dt>Outcome</dt>
+                    <dd>{s.outcome}</dd>
+                  </div>
+                </dl>
+
+                <div class="chips">
+                  {s.tags.map((t) => <span class="chip">{t}</span>)}
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -116,50 +169,32 @@ const description =
     </div>
   </section>
 
-  <!-- Systems -->
-  <section class="section" id="systems">
+  <!-- Open source -->
+  <section class="section" id="open-source">
     <div class="wrap">
       <div class="section-head">
-        <h2 class="section-title">Systems I owned</h2>
-        <p class="eyebrow">Seven case studies</p>
+        <h2 class="section-title">Open source</h2>
+        <p class="eyebrow">Four Unity packages · 2026</p>
       </div>
 
       <p class="lede" style="margin-bottom:clamp(2rem,4vw,3rem)">
-        A store page says a game shipped. It does not say what was hard about it. These are seven
-        systems from Love Eden that I designed and maintained. Each one covers the problem, the
-        constraint that made it difficult, and the decision I made, including the ones that turned
-        out to be wrong.
+        Systems I kept rebuilding from game to game, extracted into standalone Unity packages with
+        documentation and samples.
       </p>
 
       <div class="systems">
         {
-          systems.map((s) => (
-            <a class="system reveal" href={`/systems/${s.slug}`}>
-              <div class="system-number">{s.number}</div>
+          packages.map((p) => (
+            <a class="system reveal" href={p.repo}>
+              <div class="system-number">UPM</div>
               <div>
                 <h3 class="system-title">
-                  {s.title}
-                  <span class="system-go" aria-hidden="true">→</span>
+                  {p.name}
+                  <span class="system-go" aria-hidden="true">↗</span>
                 </h3>
-                <p class="system-hook">{s.hook}</p>
-
-                <dl class="system-facts">
-                  <div>
-                    <dt>Context</dt>
-                    <dd>{s.context}</dd>
-                  </div>
-                  <div>
-                    <dt>Constraint</dt>
-                    <dd>{s.constraint}</dd>
-                  </div>
-                  <div>
-                    <dt>Outcome</dt>
-                    <dd>{s.outcome}</dd>
-                  </div>
-                </dl>
-
-                <div class="chips">
-                  {s.tags.map((t) => <span class="chip">{t}</span>)}
+                <p class="system-hook">{p.line}</p>
+                <div class="chips" style="margin-top:1rem">
+                  {p.tags.map((t) => <span class="chip">{t}</span>)}
                 </div>
               </div>
             </a>
