@@ -47,6 +47,27 @@ const description =
     </div>
   </section>
 
+  <!-- Games at a glance -->
+  <section class="wrap glance-wrap">
+    <p class="eyebrow glance-label">Shipped titles</p>
+    <div class="glance">
+      {
+        games.map((g) => (
+          <a class="glance-item" href={`#game-${g.slug}`}>
+            <img src={g.icon} alt="" width="56" height="56" loading="lazy" />
+            <span class="glance-title">{g.title}</span>
+            <span class="glance-sub">{g.studio.replace(/ \(.*\)/, "").replace(" Technology", "")} · {g.years}</span>
+            {g.showRating && (
+              <span class="glance-rating">
+                {g.rating}★{g.playInstalls ? ` · ${g.playInstalls} installs` : ""}
+              </span>
+            )}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
   <!-- Systems -->
   <section class="section" id="systems">
     <div class="wrap">
@@ -111,7 +132,7 @@ const description =
       <div class="games">
         {
           games.map((g) => (
-            <article class="game reveal">
+            <article class="game reveal" id={`game-${g.slug}`}>
               <img class="game-icon" src={g.icon} alt={`${g.title} app icon`} width="84" height="84" loading="lazy" />
 
               <div class="game-body">
